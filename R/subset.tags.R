@@ -1,11 +1,13 @@
-# Function to subset tags from one file
+# Function to categorize/subset tags from tag files (can take file with all
+# animal, reference, and sync tags or two separate files, one animal tags and
+# one with sync/ref tags)
 #
 # tags: file with all tags or animal tags (if there is a sync tag file)
 # sync_tags: file with sync tags, can be null
 # id_col: string that is what the column for id/transmitter is called
-# list.sync_tags: list of strings, tag numbers for all sync tags
-# list.ref_tags: list of strings, tag numbers for all reference tags
-# list.ani_tags: list of strings, tag numbers for all animal tags
+# list.sync_tags: vector of strings, tag numbers for all sync tags
+# list.ref_tags: vector of strings, tag numbers for all reference tags
+# list.ani_tags: vector of strings, tag numbers for all animal tags
 #
 # Outputs a list of three lists giving animal tag data, sync tag data, and reference tag data
 

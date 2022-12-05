@@ -1,4 +1,8 @@
-# Function to..
+# Function that takes a dataframe, the name of one df column loop, and a list
+# that presumably has items that exist in that df column, loops through the list
+# and selects all the rows with that item and returns a df of all the selected
+# rows
+#
 # data.from: the df of data to filter from
 # loop.list: list of tags to loop through
 # column.name: string name of column that loop.list is a list of
