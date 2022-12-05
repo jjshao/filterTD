@@ -15,6 +15,8 @@ subset.tags <- function(tags, sync_tags=NULL, id_col, list.sync_tags, list.ref_t
     sync_tag_data <- loop.filter(tags, list.sync_tags, id_col)
     ref_tag_data <- loop.filter(tags, list.ref_tags, id_col)
   } else {
+    animal_tag_data <- loop.filter(tags, list.ani_tags, id_col)
+    sync_tag_data <- loop.filter(sync_tags, list.sync_tags, id_col)
     ref_tag_data <- loop.filter(sync_tags, list.ref_tags, id_col)
   }
   return(list(animal_tag_data, sync_tag_data, ref_tag_data))
