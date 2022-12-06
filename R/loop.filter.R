@@ -5,17 +5,15 @@
 #
 # Outputs a list of data
 
-
 # Make this an internal function?
 
 
+library(dplyr)
+# NOTE: Can do without a for loop if use dplyr
+
 loop.filter <- function(data.from, loop.list, column.name) {
-  data <- subset(data.from, column.name == loop.list[1])
-  loop.list <- loop.list[-1]
-  for (x in loop.list) {
-    foo <- subset(data.from, column.name == x)
-    data <- rbind(data, foo)
-  }
-  return(data)
+  data.from %>%
+    filter(column.name %in% loop.list)
+  return(data.from)
 }
 
