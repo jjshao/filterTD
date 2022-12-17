@@ -12,10 +12,7 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, sp=NULL,
     tags_subset <- subset(merged_tags, merged_tags[, sp_col_name]==sp & merged_tags[, sex_col_name]==sex)
   }
 
-  print(head(tags_subset))
   num <- table(merged_tags[, id_col_name]) # number of observations per unique animal
-  print(typeof(num))
-  print(num)
   maxy <- max(num) + 1000
 
   num_obs <- length(merged_tags[, id_col_name]) # total number of observations
