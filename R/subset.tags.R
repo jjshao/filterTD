@@ -1,13 +1,16 @@
-# Function to subset tags from one file
-#
-# tags: file with all tags or animal tags (if there is a sync tag file)
-# sync_tags: file with sync tags, can be null
-# id_col: string that is what the column for id/transmitter is called
-# sync_tags.vec: vector of strings, tag numbers for all sync tags
-# ref_tags.vec: vector of strings, tag numbers for all reference tags
-# ani_tags.vec: vector of strings, tag numbers for all animal tags
-#
-# Outputs a list of three df giving animal tag data, sync tag data, and reference tag data
+#' Subset tags from files
+#'
+#' @param tags Table of all tags or just animal tags (if there is a sync tag file)
+#' @param sync_tags Table of all sync tags, default to NULL
+#' @param id_col String that is what the column for id/transmitter is in all tables
+#' @param sync_tags.vec Vector of strings, tag numbers for all sync tags
+#' @param ref_tags.vec Vector of strings, tag numbers for all reference tags
+#' @param ani_tags.vec Vector of strings, tag numbers for all animal tags
+#' @return A list of three dataframes that give animal tag data, sync tag data, and reference tag data
+#' @examples
+#' test_ <- subset.tags(tags = all_tags, id_col = all_tags$Id, sync_tags.vec = sync_tags, ref_tags.vec = ref_tags, ani_tags.vec = ani_tags)
+#'
+#' @export
 
 subset.tags <- function(tags, sync_tags=NULL, id_col, sync_tags.vec, ref_tags.vec, ani_tags.vec) {
   if(missing(sync_tags)) {

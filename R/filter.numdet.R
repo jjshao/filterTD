@@ -1,11 +1,14 @@
-# Function to give list GREATER THAN number detections
-# data.from: the df of data to filter from
-# column.name: string name of column that loop.list is a list of
-# num_det: integer for lowest number of detections
-#
-# Outputs a list of data
+#' Finds a list of which values in a column occur more than a specified number of times in a dataset
+#'
+#' @param column.name Name of column to count
+#' @param num.det Minimum number of times occurred
+#' @return A list of numerics contained in the column that occur more than num.det times
+#' @examples
+#' anitags_200 <- filter.numdet(animal_tag_data$Id, 200)
+#'
+#' @export
 
-filter.numdet <- function(column.name, num_det) {
-  foo <- as.numeric(names(which(table(column.name) > num_det)))
+filter.numdet <- function(column.name, num.det) {
+  foo <- as.numeric(names(which(table(column.name) > num.det)))
   return(foo)
 }

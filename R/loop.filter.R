@@ -1,19 +1,16 @@
-# Function to..
-# data.from: the df of data to filter from
-# loop.list: list of tags to loop through
-# column.name: string name of column that loop.list is a list of
-#
-# Outputs a list of data
+#' Subset tags from one a table
+#'
+#' @param data.from Table that user wants to sort through
+#' @param loop.vec Vector of values that user wants to find
+#' @param column.name Name of column that contains the values within loop.vec
+#' @return A dataframe with all rows from original table whose specified column includes a value in loop.vec
+#' @examples
+#' data <- loop.filter(tags, tagnames.vec, id_col)
+#'
 
-# Make this an internal function?
-
-
-library(dplyr)
-# NOTE: Can do without a for loop if use dplyr
-
-loop.filter <- function(data.from, loop.list, column.name) {
+loop.filter <- function(data.from, loop.vec, column.name) {
   data.from %>%
-    filter(column.name %in% loop.list)
+    filter(column.name %in% loop.vec)
   return(data.from)
 }
 
