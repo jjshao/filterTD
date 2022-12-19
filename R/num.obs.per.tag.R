@@ -8,12 +8,24 @@
 #' @param sp_col_name String, name of column that includes species name, default to FALSE, required if sp!=NULL
 #' @param sex String, animal's sex, default to FALSE
 #' @param sex_col_name String, name of column that includes animal's sex, default to FALSE, required if sex!=NULL
+#' @param metadata Table of data that has metadata for tagged animals, must have column of ID tags
 #' @return Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE
 #' @examples
 #' num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
 #' sp="Homarus americanus", sp_col_name="Sp")
 #'
 #' @export
+
+
+# TO DO
+# - Assert that there is metadata for graph with sex coloured
+# - Dynamic sizing for graph x-ticks
+# - Write options for Site (actually treatment), use term "grouping" - yes
+# - Colouring for size - yes, a separate scatterplot where every point is a tag but does
+# identify tag, number of observations as function of size of individual, colour points as M/F
+# just don't need to identify tag ID (semi-transparent points to check for overlapping)
+# to check if they are fleeing, eaten, etc.
+
 
 num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, sp=NULL,
                             sp_col_name=NULL, sex=NULL, sex_col_name=NULL, metadata=NULL) {
@@ -47,7 +59,7 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, sp=NULL,
 
     barplot(height=num$num, names=num$Id, main="Number of Observations per Tag",
             xlab="Tag", ylab="Number of Observations",
-            ylim=c(0,maxy), cex.names=0.7, las=2,
+            ylim=c(0,maxy), cex.names=0.5, las=2,
             col=myColors)
     legend("topleft", legend = c("Female","Male") ,
            col = c("lightblue", "lightslateblue") , bty = "n",
