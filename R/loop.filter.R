@@ -9,8 +9,7 @@
 #'
 
 loop.filter <- function(data.from, loop.vec, column.name) {
-  data.from %>%
-    filter(column.name %in% loop.vec)
-  return(data.from)
+  data <- filter(data.from, data.from[,column.name] %in% loop.vec)
+  return(data)
 }
 
