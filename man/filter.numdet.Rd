@@ -4,7 +4,7 @@
 \alias{filter.numdet}
 \title{Finds a list of which values in a column occur more than a specified number of times in a dataset}
 \usage{
-\method{filter}{numdet}(column.name, num.det)
+filter.numdet(column.name, num.det)
 }
 \arguments{
 \item{column.name}{Name of column to count}
