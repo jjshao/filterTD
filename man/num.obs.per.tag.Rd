@@ -3,16 +3,22 @@
 \name{num.obs.per.tag}
 \alias{num.obs.per.tag}
 \title{Get number of observations per tag when given all data or data is sorted
-by species or sex, can output graph}
+by species, sex, grouping, or a combination, can output graph. Grouping can
+be used for a variety of different separations of data such as treatment.}
 \usage{
 num.obs.per.tag(
   merged_tags,
   id_col_name,
   graph = FALSE,
+  scatterplot = FALSE,
+  metadata = NULL,
   sp = NULL,
   sp_col_name = NULL,
   sex = NULL,
-  sex_col_name = NULL
+  sex_col_name = NULL,
+  grouping = NULL,
+  grouping_col_name = NULL,
+  size_col_name = NULL
 )
 }
 \arguments{
@@ -20,7 +26,11 @@ num.obs.per.tag(
 
 \item{id_col_name}{String name of column that has tag IDs}
 
-\item{graph}{Boolean, whether or not user wants an outputted bar graph of number of observations per tag, default to FALSE}
+\item{graph}{Boolean, whether or not user wants to output a bar graph of number of observations per tag, default to FALSE}
+
+\item{scatterplot}{Boolean, whether or not user wants to output a scatterplot of number of observations per size, default to FALSE}
+
+\item{metadata}{Table of data that has metadata for tagged animals, must have column of ID tags}
 
 \item{sp}{String, species name, default to FALSE}
 
@@ -29,13 +39,20 @@ num.obs.per.tag(
 \item{sex}{String, animal's sex, default to FALSE}
 
 \item{sex_col_name}{String, name of column that includes animal's sex, default to FALSE, required if sex!=NULL}
+
+\item{grouping}{String, grouping name, default to FALSE}
+
+\item{grouping_col_name}{String, name of column that includes grouping, default to FALSE, required if grouping!=NULL}
+
+\item{size_col_name}{String, name of column that includes size of animal, default to FALSE, required if scatterplot=TRUE}
 }
 \value{
 Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE
 }
 \description{
 Get number of observations per tag when given all data or data is sorted
-by species or sex, can output graph
+by species, sex, grouping, or a combination, can output graph. Grouping can
+be used for a variety of different separations of data such as treatment.
 }
 \examples{
 num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,

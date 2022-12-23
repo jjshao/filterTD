@@ -2,7 +2,7 @@
 #' by species, sex, grouping, or a combination, can output graph. Grouping can
 #' be used for a variety of different separations of data such as treatment.
 #'
-#' @param merged_tags Table of data (requires metadata if using sp or sex)
+#' @param merged_tags Table of tag data
 #' @param id_col_name String name of column that has tag IDs
 #' @param graph Boolean, whether or not user wants to output a bar graph of number of observations per tag, default to FALSE
 #' @param scatterplot Boolean, whether or not user wants to output a scatterplot of number of observations per size, default to FALSE
@@ -20,6 +20,8 @@
 #' sp="Homarus americanus", sp_col_name="Sp")
 #'
 #' @export
+
+# ADD FUNCTIONALITY FOR TIME
 
 num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=FALSE,
                             metadata=NULL, sp=NULL, sp_col_name=NULL, sex=NULL,
@@ -91,9 +93,12 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=F
     num <- t(num)
     num <- merge(num, metadata, by = "Id")
 
+    # Make colours "lightblue" and "lightslateblue" 50% transparent
+    blue <- rgb(173, 216, 230, max = 255, alpha = 125)
+    slate <- rgb(132, 112, 255, max = 255, alpha = 125)
     # Colours to represent sex
-    myColors <- ifelse(num$Sex=="F", "lightblue",
-                       ifelse(num$Sex=="M", "lightslateblue", "white"))
+    myColors <- ifelse(num$Sex=="F", blue,
+                       ifelse(num$Sex=="M", slate, "white"))
 
     plot(num$Size, num$num, main="Number of Observations per Size",
          xlab="Size", ylab="Number of Observations ", col=myColors, pch=19)
