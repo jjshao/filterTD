@@ -18,11 +18,15 @@ num.obs.per.tag(
   sex_col_name = NULL,
   grouping = NULL,
   grouping_col_name = NULL,
-  size_col_name = NULL
+  size_col_name = NULL,
+  start_date = NULL,
+  end_date = NULL,
+  time_interval = NULL,
+  time_col_name = NULL
 )
 }
 \arguments{
-\item{merged_tags}{Table of data (requires metadata if using sp or sex)}
+\item{merged_tags}{Table of tag data}
 
 \item{id_col_name}{String name of column that has tag IDs}
 
@@ -45,9 +49,18 @@ num.obs.per.tag(
 \item{grouping_col_name}{String, name of column that includes grouping, default to FALSE, required if grouping!=NULL}
 
 \item{size_col_name}{String, name of column that includes size of animal, default to FALSE, required if scatterplot=TRUE}
+
+\item{start_date}{String, start date in format YYYY-MM-DD, default to NULL}
+
+\item{end_date}{String, end date in format YYYY-MM-DD, default to NULL}
+
+\item{time_interval}{String, interval of time to separate data into, either "week" or "month", default to NULL}
+
+\item{time_col_name}{String, name of column that includes date/time data, default to NULL}
 }
 \value{
-Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE
+Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE or scatterplot=TRUE,
+oor returns integers of number of observations per week/month if date range given
 }
 \description{
 Get number of observations per tag when given all data or data is sorted
