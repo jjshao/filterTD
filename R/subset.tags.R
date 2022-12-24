@@ -12,15 +12,17 @@
 #'
 #' @export
 
+require(dplyr)
+
 subset.tags <- function(tags, sync_tags=NULL, id_col, sync_tags.vec, ref_tags.vec, ani_tags.vec) {
   if(missing(sync_tags)) {
-    animal_tag_data <- loop.filter(tags, ani_tags.vec, id_col)
-    sync_tag_data <- loop.filter(tags, sync_tags.vec, id_col)
-    ref_tag_data <- loop.filter(tags, ref_tags.vec, id_col)
+    animal_tag_data <- filter(tags, tags[,id_col] %in% ani_tags.vec)
+    sync_tag_data <- filter(tags, tags[,id_col] %in% sync_tags.vec)
+    ref_tag_data <- filter(tags, tags[,id_col] %in% ref_tags.vec)
   } else {
-    animal_tag_data <- loop.filter(tags, ani_tags.vec, id_col)
-    sync_tag_data <-  loop.filter(sync_tags, sync_tags.vec, id_col)
-    ref_tag_data <- loop.filter(sync_tags, ref_tags.vec, id_col)
+    animal_tag_data <- filter(tags, tags[,id_col] %in% ani_tags.vec)
+    sync_tag_data <-  filter(sync_tags, sync_tags[,id_col] %in% sync_tags.vec)
+    ref_tag_data <- filter(sync_tags, sync_tags[,id_col] %in% ref_tags.vec)
   }
   return(list(animal_tag_data, sync_tag_data, ref_tag_data))
 }
