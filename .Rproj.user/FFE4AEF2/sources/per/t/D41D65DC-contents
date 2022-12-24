@@ -1,0 +1,154 @@
+---
+title: "Telemetry Report 2020"
+author: "Jillian Shao"
+date: "2022-12-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction 
+
+The purpose of this file is to demonstrate the use of our R package, ```filterTD```.
+by providing a summary and evaluation of telemetry data. This package and ```dplyr``` 
+must first be loaded.
+
+```{r message = FALSE, warning = FALSE}
+library(filterTD)
+```
+
+To get started, we have to import our data. All functions in ```filterTD``` are
+designed to be able to work on data that has tagged animal data, sync tag data, 
+and metadata for animals in separate files. Here, we are demonstrating
+with data that has all three in separate files. Below, we import the data as tables.
+
+```{r include = TRUE}
+# Choose tag data file (all or just animal depending on year)
+all_tags <- read.table(file = "../all-animals_2020.csv", header=TRUE, sep=",")
+
+# Choose data file that has sync tags (use depending on year)
+other_tags <- read.table(file = "../all-sync_2020.csv", header=TRUE, sep=",")
+
+# Choose metadata file
+metadata <- read.table(file = "../MetaData_animals2020.csv", header=TRUE, sep=";")
+```
+
+```{r include = FALSE}
+ani_tags <- unique(all_tags$Id)
+non_ref <- subset(other_tags, Id!="65321"& Id!="65322")
+sync_tags <- unique(non_ref$Id)
+ref_tags <- c(65321, 65322)
+```
+
+The functions are designed to be used with animal and sync tag data in the same 
+format as shown below:
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(head(all_tags))
+```
+
+And metadata that includes one identifying column that renders it mergeable with
+the rest of the tag data. In this case, the column is ```Id```
+```{r echo = FALSE, results = 'asis'}
+kable(head(metadata))
+```
+
+## Functions
+### Subsetting Tags from Given Data
+This function subsets tags into three separate lists and returns a vector with 
+all three lists.
+
+```{r}
+test_ <- subset.tags(tags = all_tags,
+                     sync_tags = other_tags,
+                     id_col = "Id",
+                     sync_tags.vec = sync_tags,
+                     ref_tags.vec = ref_tags,
+                     ani_tags.vec = ani_tags)
+```
+
+```{r include = FALSE}
+animal_tag_data <- data.frame(test_[1])
+sync_tag_data <- data.frame(test_[2])
+ref_tag_data <- data.frame(test_[3])
+```
+
+### Finding Number of Observations per Tag
+This function returns a vector with two values, the first being the number
+of observations and the second being the number of tags. This function allows the 
+flexibility to separate the data based on species, sex, and one other grouping, 
+where the grouping can be treatment or any other separation used in the study.
+
+```{r results = 'hide'}
+stats <- num.obs.per.tag(animal_tag_data, "Id", graph = FALSE)
+```
+
+So for the entire dataset, there are 
+```{r} 
+stats[1]
+``` 
+observations and 
+```{r} 
+stats[2]
+``` 
+tags.
+
+This function also allows users to see the number of observations per week or month.
+If this functionality is used, the function will output integers representing the
+number of observations per week or month in the time frame given by the user.
+```{r}
+animal_merged <- merge(animal_tag_data, metadata, by = "Id")
+```
+
+This is an example for week:
+```{r}
+timeframe_test_week <- num.obs.per.tag(animal_merged, "Id",
+                                  sp="Cancer irroratus", sp_col_name="Sp",
+                                  metadata=metadata,
+                                  start_date="2022-06-30", end_date="2020-07-14",
+                                  time_interval="week", time_col_name="Time")
+
+```
+
+This is an example for month:
+```{r}
+timeframe_test_month <- num.obs.per.tag(animal_merged, "Id",
+                                        sp="Cancer irroratus", sp_col_name="Sp",
+                                        metadata=metadata,
+                                        start_date="2022-06-30", end_date="2020-10-31",
+                                        time_interval="month", time_col_name="Time")
+```
+#### Graphing Number of Observations per Tag
+In the same function, parameter ```graph``` is a boolean that can be marked as 
+```TRUE```. This will then prompt the function to output a bar graph showing the 
+number of observations per tag.
+
+Example including species. When only the species is given, the graph will output the tags for that species
+```{r message = FALSE, results = 'hide'}
+num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+                                       sp="Homarus americanus", sp_col_name="Sp",
+                                       metadata=metadata)
+```
+
+Example including species and sex.
+```{r message = FALSE, results = 'hide'}
+lob_test <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+                            sp="Cancer irroratus", sp_col_name="Sp",
+                            sex="F", sex_col_name="Sex")
+```
+
+#### Scatterplot of Number of Observations per Size
+In the same function, parameter ```scatterplot``` is a boolean that can be marked as 
+```TRUE```. This will then prompt the function to output a scatterplot showing the 
+number of observations per size, where each point is a different tag and the colour
+of the point represents the animal's sex.
+
+Example including species. 
+```{r message = FALSE, results = 'hide'}
+scatter_test <- num.obs.per.tag(animal_merged, "Id", scatterplot=TRUE,
+                                sp="Cancer irroratus", sp_col_name="Sp",
+                                metadata=metadata, size_col_name="Size")
+```
+

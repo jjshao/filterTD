@@ -1,0 +1,27 @@
+{
+    "id": "EBF4AFF1",
+    "path": "~/filterTD/R/hpe.graphs.R",
+    "project_path": "R/hpe.graphs.R",
+    "type": "r_source",
+    "hash": "2140793435",
+    "contents": "",
+    "dirty": false,
+    "created": 1671854339160.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "8,45",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1671854491,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1671854491119,
+    "read_only": false,
+    "read_only_alternatives": []
+}

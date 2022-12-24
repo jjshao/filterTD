@@ -1,0 +1,26 @@
+{
+    "id": "BF0A1B81",
+    "path": "~/filterTD/R/hpe.quantiles.R",
+    "project_path": "R/hpe.quantiles.R",
+    "type": "r_source",
+    "hash": "3384874268",
+    "contents": "",
+    "dirty": false,
+    "created": 1671816850744.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1671854326,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1671854326018,
+    "read_only": false,
+    "read_only_alternatives": []
+}

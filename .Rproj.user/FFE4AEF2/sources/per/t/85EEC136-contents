@@ -1,0 +1,99 @@
+library(filterTD)
+library(dplyr)
+#  CHANGE NAME eventually to include: telemetry, fine-scale or VPS
+
+# Choose tag data file (all or just animal depending on year)
+Tags = file.choose()
+all_tags <- read.table(file = Tags, header=TRUE, sep=",") #Read file
+
+# Choose data file that has sync tags (use depending on year)
+SyncTags = file.choose()
+other_tags <- read.table(file = SyncTags, header=TRUE, sep=",")
+
+# Choose metadata file
+MetaData = file.choose()
+metadata <- read.table(file = MetaData, header=TRUE, sep=";")
+
+ani_tags <- unique(all_tags$Id)
+  # 2016 data
+  #c(45195, 45198, 45199, 45197, 45196, 45200, 45202, 45203)
+              # '45201', '45204', '45206', '45205', '45209', '45218', '45212', '45220',
+              # '45211', '45213', '45207', '45221', '45219', '45217', '45210', '45208',
+              # '45223', '45215', '45222', '45216', '45214', '46103', '46101', '46096',
+              # '46094', '45457', '45456', '45455', '46102', '45458', '46095', '46100',
+              # '46099', '46087', '46098', '46083', '46093', '46081', '46080', '46091',
+              # '46097', '46092', '46090', '46089', '46082', '46085', '46088', '46084',
+              # '46086')
+
+non_ref <- subset(other_tags, Id!=65321 & Id!=65322)
+sync_tags <- unique(non_ref$Id)
+  # 2016 data
+  #c(65070, 65052, 65067, 65106, 65075, 65055, 65105, 65066)
+               # '65085', '65101', '65099', '65008', '65062', '65094', '65095', '65089',
+               # '65064', '65103', '65087', '65068', '65056', '65073', '65081', '65009',
+               # '65079', '65083', '65012', '65069')
+ref_tags <- c(65321, 65322)
+  # 2016 data
+  #c(16288)
+
+
+# Testing subsetting tags
+test_ <- subset.tags(tags = all_tags,
+                     sync_tags = other_tags,
+                     id_col = "Id",
+                     sync_tags.vec = sync_tags,
+                     ref_tags.vec = ref_tags,
+                     ani_tags.vec = ani_tags)
+
+animal_tag_data <- data.frame(test_[1])
+sync_tag_data <- data.frame(test_[2])
+ref_tag_data <- data.frame(test_[3])
+
+anitags_200 <- filter.numdet(animal_tag_data$Id, 200)
+
+# Testing the number of observations per tag
+stats <- num.obs.per.tag(animal_tag_data, "Id", graph=FALSE)
+all_obs <- stats[1]
+all_tags <- stats[2]
+
+animal_merged <- merge(animal_tag_data, metadata, by = "Id")
+
+num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+                                       sp="Homarus americanus", sp_col_name="Sp",
+                                       metadata=metadata)
+num_obs_lob <- num_obs_per_tag_lob[1]
+num_tags_lob <- num_obs_per_tag_lob[2]
+
+num_obs_per_tag_crab <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+                                        sp="Cancer irroratus", sp_col_name="Sp",
+                                        metadata=metadata)
+num_obs_crab <- num_obs_per_tag_crab[1]
+num_tags_crab <- num_obs_per_tag_crab[2]
+
+lob_test <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+                            sp="Cancer irroratus", sp_col_name="Sp",
+                            sex="F", sex_col_name="Sex")
+
+scatter_test <- num.obs.per.tag(animal_merged, "Id", scatterplot=TRUE,
+                                sp="Cancer irroratus", sp_col_name="Sp",
+                                metadata=metadata, size_col_name="Size")
+
+timeframe_test_week <- num.obs.per.tag(animal_merged, "Id",
+                                  sp="Cancer irroratus", sp_col_name="Sp",
+                                  metadata=metadata,
+                                  start_date="2022-06-30", end_date="2020-07-24",
+                                  time_interval="week", time_col_name="Time")
+
+timeframe_test_month <- num.obs.per.tag(animal_merged, "Id",
+                                        sp="Cancer irroratus", sp_col_name="Sp",
+                                        metadata=metadata,
+                                        start_date="2022-06-30", end_date="2020-10-24",
+                                        time_interval="month", time_col_name="Time")
+
+# Testing HPE
+sync_hpe <- hpe.quantiles(sync_tag_data, "HPE")
+
+x <- 0.24
+plot(as.numeric(sync_hpe[,1]), as.numeric(sync_hpe[,3]), main="HPE vs HPEm",
+     xlab="HPE", ylab="%f HPEm", pch=19)
+
