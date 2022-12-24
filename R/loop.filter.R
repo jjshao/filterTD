@@ -8,6 +8,8 @@
 #' data <- loop.filter(tags, tagnames.vec, id_col)
 #'
 
+require(dplyr)
+
 loop.filter <- function(data.from, loop.vec, column.name) {
   data <- filter(data.from, data.from[,column.name] %in% loop.vec)
   return(data)

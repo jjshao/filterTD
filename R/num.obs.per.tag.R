@@ -19,7 +19,7 @@
 #' @param time_interval String, interval of time to separate data into, either "week" or "month", default to NULL
 #' @param time_col_name String, name of column that includes date/time data, default to NULL
 #' @return Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE or scatterplot=TRUE,
-#' oor returns integers of number of observations per week/month if date range given
+#' or returns integers of number of observations per week/month if date range given
 #' @examples
 #' num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
 #' sp="Homarus americanus", sp_col_name="Sp")

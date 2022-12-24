@@ -19,7 +19,7 @@ subset.tags <- function(tags, sync_tags=NULL, id_col, sync_tags.vec, ref_tags.ve
     ref_tag_data <- loop.filter(tags, ref_tags.vec, id_col)
   } else {
     animal_tag_data <- loop.filter(tags, ani_tags.vec, id_col)
-    sync_tag_data <- loop.filter(sync_tags, sync_tags.vec, id_col)
+    sync_tag_data <-  loop.filter(sync_tags, sync_tags.vec, id_col)
     ref_tag_data <- loop.filter(sync_tags, ref_tags.vec, id_col)
   }
   return(list(animal_tag_data, sync_tag_data, ref_tag_data))
