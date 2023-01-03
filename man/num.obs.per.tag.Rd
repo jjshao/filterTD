@@ -60,7 +60,7 @@ num.obs.per.tag(
 }
 \value{
 Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE or scatterplot=TRUE,
-oor returns integers of number of observations per week/month if date range given
+or returns integers of number of observations per week/month if date range given
 }
 \description{
 Get number of observations per tag when given all data or data is sorted

@@ -2,7 +2,7 @@
 % Please edit documentation in R/hpe.quantiles.R
 \name{hpe.quantiles}
 \alias{hpe.quantiles}
-\title{Get HPE quantiles}
+\title{Get HPE quantiles corresponding to the given or default probabilities.}
 \usage{
 hpe.quantiles(sync_tags, hpe_col_name, quantiles = NULL)
 }
@@ -10,12 +10,17 @@ hpe.quantiles(sync_tags, hpe_col_name, quantiles = NULL)
 \item{sync_tags}{Table of data of sync tags}
 
 \item{hpe_col_name}{String name of column in sync_tags that has HPE values}
+
+\item{quantiles}{Vector of numerics, maximum 6 doubles, default to NULL. When NULL, quantiles = c(0.95, 0.9, 0.75, 0.5, 0.25)}
+}
+\value{
+Vector of HPE values to cut off at for each quantile.
 }
 \description{
-Get HPE quantiles
+Get HPE quantiles corresponding to the given or default probabilities.
 }
 \examples{
-num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
-sp="Homarus americanus", sp_col_name="Sp")
+quantiles <- c(0.9, 0.8, 0.5, 0.3, 0.1, 0)
+sync_hpe2 <- hpe.quantiles(sync_tag_data, "HPE", quantiles)
 
 }
