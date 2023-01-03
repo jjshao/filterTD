@@ -46,7 +46,7 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, quantiles=NULL) {
          xlab="HPE", ylab="HPEm", pch=19)
     mtext(text = x, side = 3, adj = 0.95, padj = -1.35, cex = 1)
   }
-  quantile_data <- quantile(sync_tags$HPE, probs = quantiles)
+  quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
 
   return(quantile_data)
 }
