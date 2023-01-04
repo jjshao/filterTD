@@ -26,7 +26,6 @@
 #'
 #' @export
 
-# ADD FUNCTIONALITY FOR TIME
 
 num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=FALSE,
                             metadata=NULL, sp=NULL, sp_col_name=NULL, sex=NULL,
