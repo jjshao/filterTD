@@ -1,14 +1,19 @@
-#' Graph
+#' Function that outputs a scatterplot of all observations of sync tags
+#' with longitude as the x-axis and latitude as the y-axis and the colour of
+#' each point represents HPE.
 #'
-#' @param sync_tags
-#' @param sync_hpe_col_name
-#' @param animal_tags
-#' @param ani_hpe_col_name
-#' @param lat_col_name
-#' @param long_col_name
-#' @param num_bins
-#' @return Scatterplot
+#' @name receiver.detections
+#' @param sync_tags Table of data of sync tags
+#' @param sync_hpe_col_name String name of column in sync_tags that has HPE values
+#' @param animal_tags Table of data of animal tags
+#' @param ani_hpe_col_name String name of column in animal_tags that has HPE values
+#' @param lat_col_name String name of column in animal_tags that has latitude
+#' @param long_col_name String name of column in animal_tags that has longitude
+#' @param num_bins Integer number of bins that user wants HPE to be split into
 #' @examples
+#' receiver.detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE",
+#'                     animal_tags=animal_tag_data, ani_hpe_col_name="HPE",
+#'                     num_bins=7, lat_col_name="Latitude", long_col_name="Longitude")
 #'
 #' @export
 #'

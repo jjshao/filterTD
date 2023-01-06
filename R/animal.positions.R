@@ -1,13 +1,21 @@
-#' Graph
+#' Function that outputs a scatterplot of all observations of one ID (animal)
+#' with longitude as the x-axis and latitude as the y-axis and the colour of
+#' each point represents HPE.
 #'
-#' @param animal_tags
-#' @param ani_hpe_col_name
-#' @param lat_col_name
-#' @param long_col_name
-#' @param num_bins
-#' @param ID
-#' @return Scatterplot
+#' @name animal.positions
+#' @param animal_tags Table of animal data
+#' @param ani_hpe_col_name String name of column that has HPE values
+#' @param lat_col_name String name of column that has latitude of observations
+#' @param long_col_name String name of column that has longitude of observations
+#' @param num_bins Integer number of bins that user wants HPE to be split into
+#' @param ID Integer of animal ID
 #' @examples
+#' anipos_id <- c(15048, 18032, 15100, 15075, 15086)
+#' for(x in anipos_id) {
+#'   animal.positions(animal_tags=animal_tag_data, ani_hpe_col_name="HPE",
+#'                    lat_col_name="Latitude", long_col_name="Longitude",
+#'                    num_bins=6, ID=x)
+#' }
 #'
 #' @export
 #'
@@ -22,7 +30,7 @@ animal.positions <- function(animal_tags, ani_hpe_col_name,
   rbPal <- colorRampPalette(c('red','blue'))
 
   # Filter to only keep all the rows of a certain tag
-  tags_subset <- subset(ani_copy, ani_copy[, "Id"] == ID)
+  tags_subset <- subset(animal_tags, animal_tags[, "Id"] == ID)
   # Create HPE bins, save in new column in sync_tag_data
   tags_subset$HPEbin <- as.factor(round(tags_subset[, "HPE"]))
   # Column of color values based on the HPEbin
