@@ -25,7 +25,8 @@ require(scales)
 animal.positions <- function(animal_tags, ani_hpe_col_name,
                              lat_col_name, long_col_name, num_bins, ID) {
   # Set up graph size
-  par(mfrow = c(1,1), xpd=TRUE, mar = c(5, 4, 4, 8))
+  #par(mfrow = c(1,1), xpd=TRUE, mar = c(5, 4, 4, 8))
+  par(mfrow = c(1,1))
   # Create colour gradient
   rbPal <- colorRampPalette(c('red','blue'))
 
@@ -42,11 +43,20 @@ animal.positions <- function(animal_tags, ani_hpe_col_name,
   plot(tags_subset[, long_col_name], tags_subset[, lat_col_name],
        main="Animal Tracks Classed by HPE, ID:",
        xlab="Longitude", ylab="Latitude ",
-       col=alpha(tags_subset$Col,0.3), pch=19)
+       col=alpha(tags_subset$Col,0.3), pch=19, cex=0.4, xaxt='n', yaxt='n')
+  # Axis
+  max_long <- max(tags_subset[, long_col_name])
+  min_long <- min(tags_subset[, long_col_name])
+  max_lat <- max(tags_subset[, lat_col_name])
+  min_lat <- min(tags_subset[, lat_col_name])
+  axis(side=1, at=seq(min_long, max_long, by=(max_long - min_long)/10), las=2,
+       cex.axis=0.65, tck = 1, lty = 1, col = "gray")
+  axis(side=2, at=seq(min_lat, max_lat, by=(max_lat - min_lat)/10), las=2,
+       cex.axis=0.65, tck = 1, lty = 1, col = "gray")
   # Text for ID, written in margin of each graph
   mtext(text = ID, side = 3, adj = 0.88, padj = -1.5, cex = 1.5)
   # Legend
   cuts <- gsub(",", " - ", cuts)
   cuts <- gsub("\\(", "[", cuts)
-  legend("topright", inset = c(- 0.25, 0), cuts, col=rbPal(num_bins), pch=16)
+  legend("topright", cuts, col=rbPal(num_bins), pch=16)
 }

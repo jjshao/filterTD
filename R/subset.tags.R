@@ -17,13 +17,13 @@ require(dplyr)
 
 subset.tags <- function(tags, sync_tags=NULL, id_col, sync_tags.vec, ref_tags.vec, ani_tags.vec) {
   if(missing(sync_tags)) {
-    animal_tag_data <- filter(tags, tags[,id_col] %in% ani_tags.vec)
-    sync_tag_data <- filter(tags, tags[,id_col] %in% sync_tags.vec)
-    ref_tag_data <- filter(tags, tags[,id_col] %in% ref_tags.vec)
+    animal_tag_data <- dplyr::filter(tags, tags[,id_col] %in% ani_tags.vec)
+    sync_tag_data <- dplyr::filter(tags, tags[,id_col] %in% sync_tags.vec)
+    ref_tag_data <- dplyr::filter(tags, tags[,id_col] %in% ref_tags.vec)
   } else {
-    animal_tag_data <- filter(tags, tags[,id_col] %in% ani_tags.vec)
-    sync_tag_data <-  filter(sync_tags, sync_tags[,id_col] %in% sync_tags.vec)
-    ref_tag_data <- filter(sync_tags, sync_tags[,id_col] %in% ref_tags.vec)
+    animal_tag_data <- dplyr::filter(tags, tags[,id_col] %in% ani_tags.vec)
+    sync_tag_data <-  dplyr::filter(sync_tags, sync_tags[,id_col] %in% sync_tags.vec)
+    ref_tag_data <- dplyr::filter(sync_tags, sync_tags[,id_col] %in% ref_tags.vec)
   }
   return(list(animal_tag_data, sync_tag_data, ref_tag_data))
 }
