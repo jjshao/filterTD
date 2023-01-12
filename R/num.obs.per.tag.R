@@ -148,3 +148,9 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=F
 
   return(c(num_obs, num_tags))
 }
+
+
+
+# FF COMMENTS
+#  - can @param sp ,  sp_col_name ,sex , sex_col_name  be replaced only by 'grouping' ?
+# improve the description of the parameter because it is not immediately clear what info/data type/format I should input.
