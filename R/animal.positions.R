@@ -31,7 +31,7 @@ animal.positions <- function(animal_tags, ani_hpe_col_name,
   rbPal <- colorRampPalette(c('red','blue'))
 
   # Filter to only keep all the rows of a certain tag
-  tags_subset <- subset(animal_tags, animal_tags[, "Id"] == ID)
+  tags_subset <- subset(animal_tags, animal_tags[, id_col_name] == ID)
   # Create HPE bins, save in new column in sync_tag_data
   tags_subset$HPEbin <- as.factor(round(tags_subset[, "HPE"]))
   # Column of color values based on the HPEbin

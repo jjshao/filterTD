@@ -43,10 +43,8 @@ receiver.detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
     colnames(df) = c("Latitude", "Longitude")
     num <- 1
     for(x in unique(sync_tags[, id_col_name])) {
-      print(num)
       trial <- data.frame(split_sync[num])
       colnames(trial) <- colnames(sync_tags)
-      print(head(trial))
       med_lat <- median(trial[, lat_col_name])
       med_long <- median(trial[, long_col_name])
       df[nrow(df)+1,] <- c(med_lat, med_long)

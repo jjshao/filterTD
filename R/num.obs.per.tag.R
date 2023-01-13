@@ -108,7 +108,8 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=F
     Id <- unique(tags_subset[, id_col_name])
     num <- rbind(num, Id)
     num <- t(num)
-    num <- merge(num, metadata, by = "Id")
+    colnames(num) <- c("num", id_col_name)
+    num <- merge(num, metadata, by = id_col_name)
 
     # Colours to represent sex
     myColors <- ifelse(num$Sex=="F", "lightblue",
