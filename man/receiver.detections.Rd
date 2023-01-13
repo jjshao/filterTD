@@ -19,6 +19,8 @@ each point represents HPE.}
 \item{long_col_name}{String name of column in animal_tags that has longitude}
 
 \item{num_bins}{Integer number of bins that user wants HPE to be split into}
+
+\item{id_col_name}{String name of column in sync_tags that has tag ID}
 }
 \description{
 Function that outputs a scatterplot of all observations of sync tags
