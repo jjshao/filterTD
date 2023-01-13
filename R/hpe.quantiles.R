@@ -54,3 +54,8 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, quantiles=NULL) {
 
   return(quantile_data)
 }
+
+
+# FF NOTES
+#  HPEm is hard coded in the function: what if it has another name?
+#  also is it always given in a dataset?
