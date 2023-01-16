@@ -237,7 +237,7 @@ num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
 
 
 ## FF TEST 
-**ATTENTION** the line above is the same as just setting grouping 
+**ATTENTION** the line above is the same as just setting grouping  
 **maybe remove** @param related to sp and sex to just leave grouping
 
 
@@ -281,7 +281,7 @@ num.obs.per.tag(animal_merged, "Id", graph=TRUE,
 ## [1] 182927     53
 ```
 
-the function whorks even if there is no SEX column... tha is ok I guess
+the function works even if there is no SEX column... that is ok I guess
 
 
 ```r
@@ -308,7 +308,7 @@ num.obs.per.tag(animal_merged, "Id", graph=TRUE,
 ## [1] 646732     91
 ```
 
-possiby here if someone does not specify a specific group in grouping than all levels of the group are returned...  
+possiby here if someone does not specify a specific group in grouping then all levels of the group could be returned...  
 Anyhow, it should clarified that in "grouping" the user need to enter the character string of the level s/he wants.  
 
 
