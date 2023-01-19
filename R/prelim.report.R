@@ -10,6 +10,7 @@
 #' @param id_col_name String name of column that includes tag ID (needs to be the same across data tables)
 #' @param vec_species Vector of string species names (e.g. c("Cancer irroratus","Homarus americanus"))
 #' @param hpe_col_name String name of column that includes HPE (needs to be the same for all tag data tables)
+#' @param bins Vector of doubles for HPE separations to make bins
 #' @param num_bins Double number of bins that user wants HPE separated into
 #' @param lat_col_name String name of column that includes latitude
 #' @param long_col_name String name of column that includes longitude
@@ -21,7 +22,7 @@
 #'
 
 prelim.report <- function(Tags, SyncTags=NULL, Metadata, ani_tags, sync_tags,
-                          ref_tags, id_col_name, vec_species, hpe_col_name,
+                          ref_tags, id_col_name, vec_species, hpe_col_name, bins=NULL,
                           num_bins, lat_col_name, long_col_name, sp_col_name) {
 
   if (!missing(SyncTags)) {
@@ -48,17 +49,17 @@ prelim.report <- function(Tags, SyncTags=NULL, Metadata, ani_tags, sync_tags,
                                ani_tags.vec = ani_tags)
 
   }
-  print(head(tags_subset[1]))
-  rmarkdown::render('prelim.report.sync.Rmd', params = list(tags=tags_subset,
-                                                            id_col = id_col_name,
-                                                            sync_tags.vec = sync_tags,
-                                                            ref_tags.vec = ref_tags,
-                                                            ani_tags.vec = ani_tags,
-                                                            vec_species = vec_species,
-                                                            hpe_col_name = hpe_col_name,
-                                                            num_bins = num_bins,
-                                                            lat_col_name = lat_col_name,
-                                                            long_col_name = long_col_name,
-                                                            sp_col_name = sp_col_name))
+  rmarkdown::render('prelim.report.Rmd', params = list(tags=tags_subset,
+                                                       id_col_name = id_col_name,
+                                                       sync_tags.vec = sync_tags,
+                                                       ref_tags.vec = ref_tags,
+                                                       ani_tags.vec = ani_tags,
+                                                       vec_species = vec_species,
+                                                       hpe_col_name = hpe_col_name,
+                                                       bins = bins,
+                                                       num_bins = num_bins,
+                                                       lat_col_name = lat_col_name,
+                                                       long_col_name = long_col_name,
+                                                       sp_col_name = sp_col_name))
 
 }
