@@ -23,7 +23,8 @@
 require(scales)
 
 animal.positions <- function(animal_tags, ani_hpe_col_name,
-                             lat_col_name, long_col_name, num_bins, ID) {
+                             lat_col_name, long_col_name, num_bins, ID,
+                             id_col_name) {
   # Set up graph size
   #par(mfrow = c(1,1), xpd=TRUE, mar = c(5, 4, 4, 8))
   par(mfrow = c(1,1))
