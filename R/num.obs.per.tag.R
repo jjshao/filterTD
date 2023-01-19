@@ -7,12 +7,10 @@
 #' @param graph Boolean, whether or not user wants to output a bar graph of number of observations per tag, default to FALSE
 #' @param scatterplot Boolean, whether or not user wants to output a scatterplot of number of observations per size, default to FALSE
 #' @param metadata Table of data that has metadata for tagged animals, must have column of ID tags
-#' @param sp String, species name, default to FALSE
-#' @param sp_col_name String, name of column that includes species name, default to FALSE, required if sp!=NULL
-#' @param sex String, animal's sex, default to FALSE
-#' @param sex_col_name String, name of column that includes animal's sex, default to FALSE, required if sex!=NULL
-#' @param grouping String, grouping name, default to FALSE
-#' @param grouping_col_name String, name of column that includes grouping, default to FALSE, required if grouping!=NULL
+#' @param grouping Vector of strings, grouping name, default to NULL
+#' @param grouping_col_name Vector of strings, name of column that includes grouping, default to NULL, required if grouping!=NULL
+#' @param continuous_grouping String, name of grouping of continuous variable, default to NULL
+#' @param continuous_col_name String, name of column that includes continuous grouping, default to NULL, required if grouping!=NULL
 #' @param size_col_name String, name of column that includes size of animal, default to FALSE, required if scatterplot=TRUE
 #' @param start_date String, start date in format YYYY-MM-DD, default to NULL
 #' @param end_date String, end date in format YYYY-MM-DD, default to NULL
@@ -21,42 +19,39 @@
 #' @return Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE or scatterplot=TRUE,
 #' or returns integers of number of observations per week/month if date range given
 #' @examples
-#' num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
-#' sp="Homarus americanus", sp_col_name="Sp")
+#' num_obs_per_tag_size <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+#' grouping=c("Cancer irroratus", "M"),
+#' grouping_col_name=c("Sp", "Sex"),
+#' continuous_grouping=c("Size"),
+#' continuous_col_name=c("Size"),
+#' metadata=metadata, scatterplot=TRUE)
 #'
 #' @export
 
 
 num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=FALSE,
-                            metadata=NULL, sp=NULL, sp_col_name=NULL, sex=NULL,
-                            sex_col_name=NULL, grouping=NULL, grouping_col_name=NULL,
+                            metadata=NULL, grouping=NULL, grouping_col_name=NULL,
+                            continuous_grouping=NULL, continuous_col_name=NULL,
                             size_col_name=NULL, start_date=NULL, end_date=NULL,
                             time_interval=NULL, time_col_name=NULL) {
 
-  # Subset merged_tags by species/sex/grouping
-  if (missing(sp) & missing(sex) & missing(grouping)) {
+  # Subset merged_tags by grouping
+  if (missing(grouping)) {
     tags_subset <- merged_tags
-  } else if (!missing(sp) & missing(sex) & missing(grouping)) {
-    stopifnot(!missing(sp_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sp_col_name]==sp) # subset of data this species
-  } else if (missing(sp) & !missing(sex) & missing(grouping)) {
-    stopifnot(!missing(sex_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sex_col_name]==sex) # subset of data this sex
-  } else if (missing(sp) & missing(sex) & !missing(grouping)) {
-    stopifnot(!missing(grouping_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, grouping_col_name]==grouping) # subset of data in this group
-  } else if (!missing(sp) & !missing(sex) & missing(grouping)) {
-    stopifnot(!missing(sp_col_name) & !missing(sex_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sp_col_name]==sp & merged_tags[, sex_col_name]==sex)
-  } else if (!missing(sp) & missing(sex) & !missing(grouping)) {
-    stopifnot(!missing(sp_col_name) & !missing(grouping_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sp_col_name]==sp & merged_tags[, grouping_col_name]==grouping)
-  } else if (missing(sp) & !missing(sex) & !missing(grouping)) {
-    stopifnot(!missing(sex_col_name) & !missing(grouping_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sex_col_name]==sex & merged_tags[, grouping_col_name]==grouping)
   } else {
-    stopifnot(!missing(sp_col_name) & !missing(sex_col_name) & !missing(grouping_col_name))
-    tags_subset <- subset(merged_tags, merged_tags[, sp_col_name]==sp & merged_tags[, sex_col_name]==sex & merged_tags[, grouping_col_name]) # subset of data this species and sex in this group
+    if (length(grouping) > 1) {
+      stopifnot(length(grouping) == length(grouping_col_name))
+      tags_subset <- merged_tags
+      count <- 1
+      for(x in grouping) {
+        tags_subset <- subset(tags_subset, tags_subset[, grouping_col_name[count]]==x)
+        count <- count + 1
+      }
+    } else if (length(grouping) == 1) {
+      grouping <- grouping[1]
+      grouping_col_name <- grouping_col_name[1]
+      tags_subset <- subset(merged_tags, merged_tags[, grouping_col_name]==grouping)
+    }
   }
 
   # Subset tags_subset by dates if provided
@@ -97,35 +92,15 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=F
   num <- table(tags_subset[, id_col_name]) # number of observations per unique animal
   maxy <- max(num) + 1000 # offset of maximum y for y-axis scale
 
-  if (graph==TRUE & !missing(sex)) {
+  if (graph==TRUE & !missing(grouping)) {
     barplot(num, main="Number of Observations per Tag",
             xlab="Tag", ylab="Number of Observations", ylim=c(0,maxy),
             cex.names=0.8, las=2, col="lightblue")
-  } else if (graph==TRUE & missing(sex)) {
-    stopifnot(!missing(metadata))
-
-    # Add row for Id and merge to include sex column in num
-    Id <- unique(tags_subset[, id_col_name])
-    num <- rbind(num, Id)
-    num <- t(num)
-    colnames(num) <- c("num", id_col_name)
-    num <- merge(num, metadata, by = id_col_name)
-
-    # Colours to represent sex
-    myColors <- ifelse(num$Sex=="F", "lightblue",
-                       ifelse(num$Sex=="M", "lightslateblue", "white"))
-
-    barplot(height=num$num, names=num$Id, main="Number of Observations per Tag",
-            xlab="Tag", ylab="Number of Observations",
-            ylim=c(0,maxy), cex.names=num_tags/100 - 0.1, las=2,
-            col=myColors)
-    legend("topright", legend = c("Female","Male") ,
-           col = c("lightblue", "lightslateblue") , bty = "n",
-           pch=20 , pt.cex = 3, cex = 1, horiz = FALSE, inset = c(0.03, 0.1))
   }
 
+
   if (scatterplot==TRUE) {
-    stopifnot(!missing(metadata) & !missing(size_col_name))
+    stopifnot(!missing(metadata) & !missing(continuous_grouping) & !missing(continuous_col_name))
 
     # Add row for Id and merge to include sex column in num
     Id <- unique(tags_subset[, id_col_name])
@@ -133,25 +108,10 @@ num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=F
     num <- t(num)
     num <- merge(num, metadata, by = "Id")
 
-    # Make colours "lightblue" and "lightslateblue" 50% transparent
-    blue <- rgb(173, 216, 230, max = 255, alpha = 125)
-    slate <- rgb(132, 112, 255, max = 255, alpha = 125)
-    # Colours to represent sex
-    myColors <- ifelse(num$Sex=="F", blue,
-                       ifelse(num$Sex=="M", slate, "white"))
-
-    plot(num$Size, num$num, main="Number of Observations per Size",
-         xlab="Size", ylab="Number of Observations ", col=myColors, pch=19)
-    legend("topright", legend = c("Female","Male") ,
-           col = c("lightblue", "lightslateblue") , bty = "n",
-           pch=20 , pt.cex = 3, cex = 1, horiz = FALSE, inset = c(0.03, 0.1))
+    plot(num[, continuous_col_name], num$num, main="Number of Observations per Size",
+         xlab=continuous_grouping, ylab="Number of Observations ", pch=19)
   }
 
   return(c(num_obs, num_tags))
 }
 
-
-
-# FF COMMENTS
-#  - can @param sp ,  sp_col_name ,sex , sex_col_name  be replaced only by 'grouping' ?
-# improve the description of the parameter because it is not immediately clear what info/data type/format I should input.

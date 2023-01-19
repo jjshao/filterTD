@@ -56,7 +56,7 @@ Given the percentages of data to keep (0.95, 0.9, 0.75, 0.5, and 0.25), below is
 graph of HPE vs HPEm at each quantile and the HPE value, in column 'x', to retain the given
 percentage of data. 
 ``` {r echo = FALSE}
-sync_hpe <- hpe.quantiles(sync_tag_data, hpe_col_name)
+sync_hpe <- hpe.quantiles(sync_tag_data, hpe_col_name, hpem_col_name)
 kable(sync_hpe)
 ```
 

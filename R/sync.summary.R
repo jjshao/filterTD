@@ -14,7 +14,7 @@ sync.summary <- function(sync_tags, hpe_col_name, hpe_levels) {
 
   # Loop through vector of HPE values
   for (x in hpe_levels) {
-    sync1 <- subset(sync_tag_data, HPE<=x)
+    sync1 <- subset(sync_tags, sync_tags[,hpe_col_name]<=x)
     # Create HPE bins
     sync1$HPEbin <- as.factor(round(sync1[, hpe_col_name]))
     avg <- mean(sync1[, hpe_col_name])

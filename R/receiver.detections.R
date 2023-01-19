@@ -60,7 +60,6 @@ receiver.detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
       num <- num + 1
     }
     # Plot
-    #fig.dim = c(20,20)
     plot(sync_tags[, long_col_name], sync_tags[, lat_col_name],
          main="Receivers Classed by HPE",
          xlab="Longitude", ylab="Latitude ",

@@ -34,7 +34,7 @@ animal.positions <- function(animal_tags, ani_hpe_col_name,
   # Filter to only keep all the rows of a certain tag
   tags_subset <- subset(animal_tags, animal_tags[, id_col_name] == ID)
   # Create HPE bins, save in new column in sync_tag_data
-  tags_subset$HPEbin <- as.factor(round(tags_subset[, "HPE"]))
+  tags_subset$HPEbin <- as.factor(round(tags_subset[, ani_hpe_col_name]))
   # Column of color values based on the HPEbin
   tags_subset$Col <- rbPal(num_bins)[cut(as.numeric(tags_subset$HPEbin), breaks=num_bins)]
   # Show breaks in legend
