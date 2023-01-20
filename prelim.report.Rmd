@@ -43,7 +43,8 @@ cat("Total number of animal tags", stats[2], " \n")
 for(x in vec_species) {
         cat("### Graph for", x, " \n")
         num_obs_per_tag_ani <- num.obs.per.tag(animal_merged, id_col_name, graph=TRUE,
-                                               sp=x, sp_col_name=sp_col_name,
+                                               grouping=x,
+                                               grouping_col_name=sp_col_name,
                                                metadata=metadata)
         cat("Total number of observations for", x, ": ", num_obs_per_tag_ani[1], " \n")
         cat("Total number of tags for", x, ": ", num_obs_per_tag_ani[2], " \n")

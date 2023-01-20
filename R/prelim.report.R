@@ -10,6 +10,7 @@
 #' @param id_col_name String name of column that includes tag ID (needs to be the same across data tables)
 #' @param vec_species Vector of string species names (e.g. c("Cancer irroratus","Homarus americanus"))
 #' @param hpe_col_name String name of column that includes HPE (needs to be the same for all tag data tables)
+#' @param hpem_col_name String name of column that includes HPEm
 #' @param bins Vector of doubles for HPE separations to make bins
 #' @param num_bins Double number of bins that user wants HPE separated into
 #' @param lat_col_name String name of column that includes latitude
@@ -22,7 +23,8 @@
 #'
 
 prelim.report <- function(Tags, SyncTags=NULL, Metadata, ani_tags, sync_tags,
-                          ref_tags, id_col_name, vec_species, hpe_col_name, bins=NULL,
+                          ref_tags, id_col_name, vec_species, hpe_col_name,
+                          hpem_col_name, bins=NULL,
                           num_bins, lat_col_name, long_col_name, sp_col_name) {
 
   if (!missing(SyncTags)) {
