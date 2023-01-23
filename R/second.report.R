@@ -10,6 +10,9 @@
 #'
 
 second.report <- function() {
-  rmarkdown::render('second.report.Rmd')
+  rmarkdown::render('second.report.Rmd', params = list(hpe=hpe))
 
 }
+
+# Test for willing to lose: 10% and 50% of data
+# Test for HPEm: error <2m and <30m
