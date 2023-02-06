@@ -1,11 +1,12 @@
 #' Calculate linear regression given HPE level or percentage of data.
+#' Accepts only one of hpem_min or percentage.
 #'
 #' @param sync_tags Table of data of sync tags
 #' @param hpe_col_name String name of column in sync_tags that has HPE values
 #' @param hpem_col_name String name of column in sync_tags that has HPEm values
-#' @param probability
-#' @param hpem_min
-#' @return Vector of three values (p-value, r-squared, and percentage of removed data).
+#' @param percentage Percentage of data you are willing to lose, default to NULL
+#' @param hpem_min Maximum HPEm value you are willing to have the data be, default to NULL
+#' @return Vector of three values (p-value, r-squared, and percentage of removed data as a decimal).
 #' @examples
 #'
 #' @export
@@ -13,7 +14,11 @@
 require(ggplot2)
 
 hpe.linear.regression <- function(sync_tags, hpe_col_name, hpem_col_name,
-                                  probability=NULL, hpem_min=NULL) {
+                                  percentage=NULL, hpem_min=NULL) {
+  if(!missing(percentage) & !missing(hpem_min)) {
+    print("Give only one percentage or hpem_min")
+    stop()
+  }
 
   # Create HPE bins, save in new column in sync_tag_data
   sync_tags$HPEbin <- as.factor(round(sync_tags[, hpe_col_name]))
@@ -21,14 +26,14 @@ hpe.linear.regression <- function(sync_tags, hpe_col_name, hpem_col_name,
   # Count number of detections per HPE value
   bins <- aggregate(HPEm ~ HPEbin, sync_tags, length)
 
-  if(missing(probability) & !missing(hpem_min)) {
+  if(missing(percentage) & !missing(hpem_min)) {
     # hpem <= 2 means lose all data points that has hpem > 2
     sync_tags$prob <- sync_tags[, hpem_col_name]
     sync_prob <- subset(sync_tags, sync_tags[, "prob"]<=hpem_min)
-  } else if(!missing(probability) & missing(hpem_min)) {
-    # probability 0.1 means willing to lose 10% of data
+  } else if(!missing(percentage) & missing(hpem_min)) {
+    # percentage 0.1 means willing to lose 10% of data
     sync_prob <- as.data.frame(with(sync_tags, (tapply(HPEm, HPEbin,
-                                                       quantile, probs=probability,
+                                                       quantile, probs=percentage,
                                                        na.rm=TRUE))))
     # Rename column
     colnames(sync_prob) <- c("prob")
@@ -54,5 +59,5 @@ hpe.linear.regression <- function(sync_tags, hpe_col_name, hpem_col_name,
              colour = "red") +
     labs(y = "HPEm", x = "Binned HPE", title = "Linear Regression of Binned HPE and HPEm"))
 
-  return(c(summary(mod)$coefficients[,4], summary(mod)$r.squared, perc_remain))
+  return(c(summary(mod)$coefficients[,4], summary(mod)$r.squared, perc_remain, removed_points))
 }
