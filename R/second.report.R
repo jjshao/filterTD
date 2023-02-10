@@ -2,16 +2,13 @@
 #' will appear after certain processing with HPE and data loss percentages.
 #'
 #' @name second.report
-#' @param data
-#' @examples
 #'
 #'
 #' @export
 #'
 
 second.report <- function() {
-  rmarkdown::render('second.report.Rmd', params = list(hpe=hpe))
-
+  rmarkdown::render('second.report.Rmd', params = list(sync_tag_data=sync_tag_data))
 }
 
 # Test for willing to lose: 10% and 50% of data

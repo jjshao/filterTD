@@ -12,12 +12,10 @@ num.obs.per.tag(
   graph = FALSE,
   scatterplot = FALSE,
   metadata = NULL,
-  sp = NULL,
-  sp_col_name = NULL,
-  sex = NULL,
-  sex_col_name = NULL,
   grouping = NULL,
   grouping_col_name = NULL,
+  continuous_grouping = NULL,
+  continuous_col_name = NULL,
   size_col_name = NULL,
   start_date = NULL,
   end_date = NULL,
@@ -36,17 +34,13 @@ num.obs.per.tag(
 
 \item{metadata}{Table of data that has metadata for tagged animals, must have column of ID tags}
 
-\item{sp}{String, species name, default to FALSE}
+\item{grouping}{Vector of strings, grouping name, default to NULL}
 
-\item{sp_col_name}{String, name of column that includes species name, default to FALSE, required if sp!=NULL}
+\item{grouping_col_name}{Vector of strings, name of column that includes grouping, default to NULL, required if grouping!=NULL}
 
-\item{sex}{String, animal's sex, default to FALSE}
+\item{continuous_grouping}{String, name of grouping of continuous variable, default to NULL}
 
-\item{sex_col_name}{String, name of column that includes animal's sex, default to FALSE, required if sex!=NULL}
-
-\item{grouping}{String, grouping name, default to FALSE}
-
-\item{grouping_col_name}{String, name of column that includes grouping, default to FALSE, required if grouping!=NULL}
+\item{continuous_col_name}{String, name of column that includes continuous grouping, default to NULL, required if grouping!=NULL}
 
 \item{size_col_name}{String, name of column that includes size of animal, default to FALSE, required if scatterplot=TRUE}
 
@@ -68,7 +62,11 @@ by species, sex, grouping, or a combination, can output graph. Grouping can
 be used for a variety of different separations of data such as treatment.
 }
 \examples{
-num_obs_per_tag_lob <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
-sp="Homarus americanus", sp_col_name="Sp")
+num_obs_per_tag_size <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+grouping=c("Cancer irroratus", "M"),
+grouping_col_name=c("Sp", "Sex"),
+continuous_grouping=c("Size"),
+continuous_col_name=c("Size"),
+metadata=metadata, scatterplot=TRUE)
 
 }

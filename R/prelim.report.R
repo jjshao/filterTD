@@ -16,7 +16,6 @@
 #' @param lat_col_name String name of column that includes latitude
 #' @param long_col_name String name of column that includes longitude
 #' @param sp_col_name String name of column that includes species name in metadata file
-#' @examples
 #'
 #'
 #' @export

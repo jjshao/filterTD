@@ -4,12 +4,14 @@
 \alias{hpe.quantiles}
 \title{Get HPE quantiles corresponding to the given or default probabilities.}
 \usage{
-hpe.quantiles(sync_tags, hpe_col_name, quantiles = NULL)
+hpe.quantiles(sync_tags, hpe_col_name, hpem_col_name, quantiles = NULL)
 }
 \arguments{
 \item{sync_tags}{Table of data of sync tags}
 
 \item{hpe_col_name}{String name of column in sync_tags that has HPE values}
+
+\item{hpem_col_name}{String name of column in sync_tags that has HPEm values}
 
 \item{quantiles}{Vector of numerics, maximum 6 doubles, default to NULL. When NULL, quantiles = c(0.95, 0.9, 0.75, 0.5, 0.25)}
 }

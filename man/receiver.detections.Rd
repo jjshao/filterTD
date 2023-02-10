@@ -18,7 +18,7 @@ each point represents HPE.}
 
 \item{long_col_name}{String name of column in animal_tags that has longitude}
 
-\item{num_bins}{Integer number of bins that user wants HPE to be split into}
+\item{bins}{Vector of doubles of bins that user wants HPE to be split into, max vector length 6}
 
 \item{id_col_name}{String name of column in sync_tags that has tag ID}
 }
@@ -30,6 +30,6 @@ each point represents HPE.
 \examples{
 receiver.detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE",
                     animal_tags=animal_tag_data, ani_hpe_col_name="HPE",
-                    num_bins=7, lat_col_name="Latitude", long_col_name="Longitude")
+                    bins=c(5,50,75,100), lat_col_name="Latitude", long_col_name="Longitude")
 
 }

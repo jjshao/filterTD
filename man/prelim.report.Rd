@@ -14,6 +14,8 @@ prelim.report(
   id_col_name,
   vec_species,
   hpe_col_name,
+  hpem_col_name,
+  bins = NULL,
   num_bins,
   lat_col_name,
   long_col_name,
@@ -38,6 +40,10 @@ prelim.report(
 \item{vec_species}{Vector of string species names (e.g. c("Cancer irroratus","Homarus americanus"))}
 
 \item{hpe_col_name}{String name of column that includes HPE (needs to be the same for all tag data tables)}
+
+\item{hpem_col_name}{String name of column that includes HPEm}
+
+\item{bins}{Vector of doubles for HPE separations to make bins}
 
 \item{num_bins}{Double number of bins that user wants HPE separated into}
 

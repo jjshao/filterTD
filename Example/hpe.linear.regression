@@ -1,0 +1,2 @@
+sync_tag_data <- read.table(file = "/inst/extdata/dummy_sync.csv", header=TRUE, sep=",")
+sync_linreg <- hpe.linear.regression(sync_tag_data, "HPE", "HPEm", percentage=0.1)
