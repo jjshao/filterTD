@@ -6,8 +6,11 @@
 #' @param quantiles Vector of numerics, maximum 6 doubles, default to NULL. When NULL, quantiles = c(0.95, 0.9, 0.75, 0.5, 0.25)
 #' @return Vector of HPE values to cut off at for each quantile.
 #' @examples
+#' # load dataset:
+#' data(dummy_sync)
+#' head(dummy_sync)
 #' quantiles <- c(0.9, 0.8, 0.5, 0.3, 0.1, 0)
-#' sync_hpe2 <- hpe.quantiles(sync_tag_data, "HPE", quantiles)
+#' sync_hpe2 <- hpe.quantiles(dummy_sync, "HPE", quantiles)
 #'
 #' @export
 

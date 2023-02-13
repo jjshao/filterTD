@@ -19,14 +19,14 @@ library(knitr)
 sync_linreg <- hpe.linear.regression(sync_tag_data,
                                      hpe_col_name, 
                                      hpem_col_name, 
-                                     percentage)
+                                     hpem_max=hpem_max)
 ```
 
 ## Summary of Removed Points
 ``` {r echo = FALSE}
 sync_rempoint <- removed.points(sync_tags=sync_tag_data, hpe_col_name=hpe_col_name,
                                 hpem_col_name=hpem_col_name, id_col_name=id_col_name,
-                                time_col_name=time_col_name, percentage=percentage)
+                                time_col_name=time_col_name, hpem_max=hpem_max)
 
 total <- paste0(sync_rempoint[1], collapse = "\n")
 removed_tag <- paste0(sync_rempoint[2], collapse = "\n")

@@ -5,7 +5,15 @@
 \title{Wrapper function to generate secondary report that outlines how the data
 will appear after certain processing with HPE and data loss percentages.}
 \usage{
-second.report()
+second.report(
+  sync_tag_data,
+  hpe_col_name,
+  hpem_col_name,
+  id_col_name,
+  time_col_name,
+  percentage = NULL,
+  hpem_max = NULL
+)
 }
 \description{
 Wrapper function to generate secondary report that outlines how the data

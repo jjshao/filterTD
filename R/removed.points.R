@@ -40,26 +40,29 @@ removed.points <- function(sync_tags, hpe_col_name, hpem_col_name, id_col_name,
     total <- nrow(removed_points)
 
     # Number of points removed by tag
-    bytag <- table(removed_points[id_col_name])
+    bytag <- table(removed_points[,id_col_name])
     bytag <- data.frame(bytag)
+    names(bytag)[names(bytag) == 'Var1'] <- 'Transmitter ID'
+    names(bytag)[names(bytag) == 'Freq'] <- 'Number Removed'
 
     # Number by time period
     # Add column to show week number
-    tags_subset[,"week_num"] <- strftime(tags_subset[, time_col_name], format = "%V")
+    removed_points[,"week_num"] <- strftime(removed_points[, time_col_name], format = "%V")
     # Count number of times these occur
     # Ensure that tag data date column are characters
-    tags_subset[, time_col_name] <- as.character(tags_subset[, time_col_name])
+    removed_points[, time_col_name] <- as.character(removed_points[, time_col_name])
     # Split into date and time
-    tags_subset[, "date"] <- sapply(sapply(tags_subset[, time_col_name],function(x)strsplit(x," ")),function(x)x[1])
-    tags_subset[, "time"] <- sapply(sapply(tags_subset[, time_col_name],function(x)strsplit(x," ")),function(x)x[2])
+    removed_points[, "date"] <- sapply(sapply(removed_points[, time_col_name],function(x)strsplit(x," ")),function(x)x[1])
+    removed_points[, "time"] <- sapply(sapply(removed_points[, time_col_name],function(x)strsplit(x," ")),function(x)x[2])
     # Change to be in R Date
-    tags_subset[, "date"] <- as.Date(tags_subset[, "date"],format='%Y-%m-%d')
-    num_obs_per_time <- table(tags_subset[, "week_num"])
+    removed_points[, "date"] <- as.Date(removed_points[, "date"],format='%Y-%m-%d')
+    num_obs_per_time <- table(removed_points[, "week_num"])
     bytime <- data.frame(num_obs_per_time)
     names(bytime)[names(bytime) == 'Var1'] <- 'Week of the Year'
+    names(bytime)[names(bytime) == 'Freq'] <- 'Number Removed'
 
     # Number by place
-    byplace <- table(removed_points[id_col_name])
+    #byplace <- table(removed_points[id_col_name])
 
     return(list(total, bytag, bytime))
   }

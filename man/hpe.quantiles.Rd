@@ -22,7 +22,10 @@ Vector of HPE values to cut off at for each quantile.
 Get HPE quantiles corresponding to the given or default probabilities.
 }
 \examples{
+# load dataset:
+data(dummy_sync)
+head(dummy_sync)
 quantiles <- c(0.9, 0.8, 0.5, 0.3, 0.1, 0)
-sync_hpe2 <- hpe.quantiles(sync_tag_data, "HPE", quantiles)
+sync_hpe2 <- hpe.quantiles(dummy_sync, "HPE", quantiles)
 
 }
