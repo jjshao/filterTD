@@ -9,8 +9,11 @@
 #' @param hpem_max Maximum HPEm value you are willing to have the data be, default to NULL
 #' @return Vector of three values (p-value, r-squared, and percentage of removed data as a decimal).
 #'
-#' @example
-#' inst/examples/hpe.linear.regressions.R
+#' @examples
+#' # Load dataset
+#' dummy_sync <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+#' # Example
+#' sync_linreg <- hpe.linear.regression(dummy_sync, "HPE", "HPEm", percentage=0.1)
 #'
 #' @export
 

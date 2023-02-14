@@ -4,7 +4,11 @@
 #' @param num.det Minimum number of times occurred
 #' @return A list of numerics contained in the column that occur more than num.det times
 #' @examples
+#' # Load data
+#' animal_tag_data <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
+#' # Example
 #' anitags_200 <- filter.numdet(animal_tag_data$Id, 200)
+#' head(anitags_200)
 #'
 #' @export
 

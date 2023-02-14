@@ -6,6 +6,13 @@
 #' @param hpe_levels Vector of HPE values
 #' @return Dataframe of numerics of summary statistics for sync data
 #'
+#' @examples
+#' # Load data
+#' sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+#' # Example
+#' sync_summary <- sync.summary(sync_tag_data,"HPE", c(25, 50))
+#'
+#'
 #' @export
 
 sync.summary <- function(sync_tags, hpe_col_name, hpe_levels) {

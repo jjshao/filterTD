@@ -23,7 +23,9 @@ Calculate linear regression given HPE level or percentage of data.
 Accepts only one of hpem_max or percentage.
 }
 \examples{
+# Load dataset
+dummy_sync <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+# Example
+sync_linreg <- hpe.linear.regression(dummy_sync, "HPE", "HPEm", percentage=0.1)
 
-sync_tag_data <- read.table(file = "/inst/extdata/dummy_sync.csv", header=TRUE, sep=",")
-sync_linreg <- hpe.linear.regression(sync_tag_data, "HPE", "HPEm", percentage=0.1)
 }

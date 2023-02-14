@@ -21,3 +21,11 @@ Dataframe of numerics of summary statistics for sync data
 Get summary statistics for sync tags at chosen HPE values.
 Summary statistics includes mean, maximum, minimum, standard deviation, and standard error.
 }
+\examples{
+# Load data
+sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+# Example
+sync_summary <- sync.summary(sync_tag_data,"HPE", c(25, 50))
+
+
+}

@@ -9,12 +9,12 @@
 #' @param long_col_name String name of column that has longitude of observations
 #' @param num_bins Integer number of bins that user wants HPE to be split into
 #' @param ID Integer of animal ID
-#' @examples anipos_id <- c(15048, 18032, 15100, 15075, 15086)
-#' for(x in anipos_id) {
-#'   animal.positions(animal_tags=animal_tag_data, ani_hpe_col_name="HPE",
+#' @examples
+#' # load dataset:
+#' dummy_animal <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
+#' animal.positions(animal_tags=dummy_animal, ani_hpe_col_name="HPE",
 #'                    lat_col_name="Latitude", long_col_name="Longitude",
-#'                    num_bins=6, ID=x)
-#' }
+#'                    num_bins=6, ID=15048, id_col_name="Id")
 #'
 #' @export
 #'

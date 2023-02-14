@@ -23,6 +23,16 @@ A list of three dataframes that give animal tag data, sync tag data, and referen
 Subset tags from files
 }
 \examples{
-test_ <- subset.tags(tags = all_tags, id_col = all_tags$Id, sync_tags.vec = sync_tags, ref_tags.vec = ref_tags, ani_tags.vec = ani_tags)
+# Load data
+all_tags <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
+other_tags <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+ani_tags <- unique(all_tags$Id)
+non_ref <- subset(other_tags, Id!=61034)
+sync_tags <- unique(non_ref$Id)
+ref_tags <- c(61034)
+# Example
+test_ <- subset.tags(tags = all_tags, id_col = "Id",
+                     sync_tags.vec = sync_tags, ref_tags.vec = ref_tags,
+                     ani_tags.vec = ani_tags)
 
 }

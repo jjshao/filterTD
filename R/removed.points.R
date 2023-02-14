@@ -9,6 +9,9 @@
 #' @return If df_return is FALSE, returns list of three return values (total number of removed points, number of removed points by tag, number of removed points by week).
 #' If df_return is TRUE, returns dataframe of all removed points.
 #' @examples
+#' # Load data
+#' sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+#' # Example
 #' sync_rempoint <- removed.points(sync_tags=sync_tag_data, hpe_col_name="HPE",
 #'   hpem_col_name="HPEm", id_col_name="Id",
 #'   time_col_name="Time", percentage=0.1,

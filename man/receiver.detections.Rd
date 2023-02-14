@@ -28,8 +28,10 @@ with longitude as the x-axis and latitude as the y-axis and the colour of
 each point represents HPE.
 }
 \examples{
-receiver.detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE",
-                    animal_tags=animal_tag_data, ani_hpe_col_name="HPE",
-                    bins=c(5,50,75,100), lat_col_name="Latitude", long_col_name="Longitude")
+# Load data
+sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+# Example
+receiver.detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE", bins=7,
+                    lat_col_name="Latitude", long_col_name="Longitude", id_col_name="Id")
 
 }

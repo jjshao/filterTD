@@ -19,12 +19,18 @@
 #' @return Vector of number of total number of observations and total number of tags (for given parameters) and graph if graph=TRUE or scatterplot=TRUE,
 #' or returns integers of number of observations per week/month if date range given
 #' @examples
+#' # Load data
+#' animal_tag_data <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
+#' metadata <- read.table(file = './extdata/dummy_metadata.csv', header=TRUE, sep=",")
+#' animal_merged <- merge(animal_tag_data, metadata, by = "Id")
+#'
+#' # Example to make a scatterplot
 #' num_obs_per_tag_size <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
-#' grouping=c("Cancer irroratus", "M"),
-#' grouping_col_name=c("Sp", "Sex"),
-#' continuous_grouping=c("Size"),
-#' continuous_col_name=c("Size"),
-#' metadata=metadata, scatterplot=TRUE)
+#'                                         grouping=c("Cancer irroratus", "M"),
+#'                                         grouping_col_name=c("Sp", "Sex"),
+#'                                         continuous_grouping=c("Size"),
+#'                                         continuous_col_name=c("Size"),
+#'                                         metadata=metadata, scatterplot=TRUE)
 #'
 #' @export
 
