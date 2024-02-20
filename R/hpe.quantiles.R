@@ -4,7 +4,7 @@
 #' @param hpe_col_name String name of column in sync_tags that has HPE values
 #' @param hpem_col_name String name of column in sync_tags that has HPEm values
 #' @param quantiles Vector of numerics, maximum 6 doubles, default to NULL. When NULL, quantiles = c(0.95, 0.9, 0.75, 0.5, 0.25)
-#' @return Vector of HPE values to cut off at for each quantile.
+#' @return Dataframe of HPE values to cut off at for each quantile as well as the number of points removed.
 #' @examples
 #' # load dataset:
 #' sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
@@ -14,7 +14,6 @@
 #' @export
 
 hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL) {
-
   if (missing(quantiles)) {
     quantiles <- c(0.95, 0.9, 0.75, 0.5, 0.25)
   } else {
@@ -55,8 +54,24 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL
     mtext(text = x, side = 3, adj = 0.95, padj = -1.35, cex = 1)
   }
 
-  quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
+  # Initialize a vector to store the number of points removed for each quantile
+  points_removed <- numeric(length(quantiles))
+  # Calculate and display the number of points removed for each quantile
+  for (i in seq_along(quantiles)) {
+    q <- quantiles[i]
 
-  return(quantile_data)
+    # Get the indices of points outside the quantile range
+    outside_indices <- which(sync_tags[, hpe_col_name] < quantile(sync_tags[, hpe_col_name], q) | sync_tags[, hpe_col_name] > quantile(sync_tags[, hpe_col_name], 1 - q))
+
+    # Count the number of points removed
+    points_removed[i] <- length(outside_indices)
+  }
+
+  quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
+  result_df <- data.frame("HPE_Value" = c(quantile_data),
+                          "Number_Points_Removed" = points_removed)
+
+
+  return(result_df)
 }
 

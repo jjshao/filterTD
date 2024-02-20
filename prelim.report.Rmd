@@ -17,6 +17,7 @@ library(knitr)
 
 ## Basic Summary of All Data
 ``` {r include = FALSE}
+Metadata = "C:/Users/shaoj/Documents/GitHub/filterTD/extdata/dummy_sync.csv"
 metadata <- read.table(file = Metadata, header=TRUE, sep=";")
 
 animal_tag_data <- data.frame(tags_subset[1])
