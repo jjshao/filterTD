@@ -56,6 +56,8 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL
 
   # Initialize a vector to store the number of points removed for each quantile
   points_removed <- numeric(length(quantiles))
+  # Original number of total points
+  orig_num <- nrow(sync_tags)
   # Calculate and display the number of points removed for each quantile
   for (i in seq_along(quantiles)) {
     q <- quantiles[i]
@@ -64,7 +66,7 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL
     outside_indices <- which(sync_tags[, hpe_col_name] < quantile(sync_tags[, hpe_col_name], q) | sync_tags[, hpe_col_name] > quantile(sync_tags[, hpe_col_name], 1 - q))
 
     # Count the number of points removed
-    points_removed[i] <- length(outside_indices)
+    points_removed[i] <- orig_num - length(outside_indices)
   }
 
   quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
