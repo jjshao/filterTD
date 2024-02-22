@@ -27,44 +27,31 @@ hpe.linear.regression <- function(sync_tags, hpe_col_name, hpem_col_name,
     stop()
   }
 
-  # Create HPE bins, save in new column in sync_tag_data
-  sync_tags$HPEbin <- as.factor(round(sync_tags[, hpe_col_name]))
-  sync_tags$HPEm <- sync_tags[, hpem_col_name]
-  # Count number of detections per HPE value
-  bins <- aggregate(HPEm ~ HPEbin, sync_tags, length)
-
   if(missing(percentage) & !missing(hpem_max)) {
     # hpem <= 2 means lose all data points that has hpem > 2
-    sync_tags$prob <- sync_tags[, hpem_col_name]
-    sync_prob <- subset(sync_tags, sync_tags[, "prob"]<=hpem_max)
+    #sync_tags$prob <- sync_tags[, hpem_col_name]
+    sync_prob <- subset(sync_tags, sync_tags[, hpem_col_name]<=hpem_max)
   } else if(!missing(percentage) & missing(hpem_max)) {
     # percentage 0.1 means willing to lose 10% of data
-    sync_prob <- as.data.frame(with(sync_tags, (tapply(HPEm, HPEbin,
-                                                       quantile, probs=percentage,
-                                                       na.rm=TRUE))))
-    # Rename column
-    colnames(sync_prob) <- c("prob")
+    quantile_data <- quantile(sync_tags[, hpe_col_name], probs = percentage)
+    # Segment sync_tags to keep only rows where the HPE is less than or equal to
+    #the accepted HPE for that quantile
+    sync_prob <- sync_tags[sync_tags[, hpe_col_name] <= quantile_data, ]
   }
 
   # percent remaining
   perc_remain <- nrow(sync_prob)/nrow(sync_tags)
 
-  # Create a HPEbin column to merge
-  sync_prob$HPEbin <- row.names(sync_prob)
+  # Linear regression of HPEm and HPE
+  mod <- lm(sync_prob[, hpem_col_name]~sync_prob[, hpe_col_name])
 
-  # Merge two datasets
-  sync_ALL <- merge(bins, sync_prob, by="HPEbin")
-
-  # Linear regression of HPEm (prob) and HPEbin
-  mod <- lm(prob~as.numeric(HPEbin)-1, data=sync_ALL)
-
-  print(ggplot(sync_ALL, aes(as.numeric(HPEbin), y=prob))+
+  print(ggplot(sync_prob, aes(sync_prob[, hpe_col_name], y=sync_prob[, hpem_col_name]))+
     geom_point() + theme_bw() +
-    geom_smooth(method="lm", formula=y~0+x)+
-    annotate(label = sprintf("y = %.3f x\nR = %.2f", coef(mod), summary(mod)$r.squared),
-             geom = "text", x = (max(as.numeric(sync_ALL$HPEbin))/2), y = (max(sync_ALL$prob)/2), size = 6,
-             colour = "red") +
-    labs(y = "HPEm", x = "Binned HPE", title = "Linear Regression of Binned HPE and HPEm"))
+    geom_smooth(method="lm", formula=y~x) +
+    annotate(label = sprintf("y = %.3f x\nR = %.3f", coef(mod), summary(mod)$r.squared),
+             geom = "text", x = (min(sync_prob[, hpe_col_name])*1.01), y = (max(sync_prob[, hpem_col_name])*0.99), size = 4,
+             colour = "red", check_overlap = TRUE) +
+    labs(y = "HPEm", x = "HPE", title = "Linear Regression of HPE and HPEm"))
 
   return(c(summary(mod)$coefficients[,4], summary(mod)$r.squared, perc_remain))
 }
