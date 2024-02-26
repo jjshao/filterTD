@@ -20,6 +20,7 @@
 #'
 
 require(scales)
+require(ggplot2)
 
 animal.positions <- function(animal_tags, ani_hpe_col_name,
                              lat_col_name, long_col_name, num_bins, ID,
@@ -59,4 +60,15 @@ animal.positions <- function(animal_tags, ani_hpe_col_name,
   cuts <- gsub(",", " - ", cuts)
   cuts <- gsub("\\(", "[", cuts)
   legend("topright", cuts, col=rbPal(num_bins), pch=16)
+
+  ggplot(tags_subset, aes(x=tags_subset[, hpe_col_name])) +
+    geom_histogram(binwidth=3, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+    #scale_x_continuous(breaks = seq(min(tags_subset[, hpe_col_name]), max(tags_subset[, hpe_col_name]), by = 5)) +
+    geom_vline(xintercept = median(tags_subset[, hpe_col_name]), color = "blue", size=1) +
+    labs(title = "crabe_57016", caption = paste("filtered by HPE < 60", sep = "")) +
+    annotate("text", x = 45, y = 9500, label = "HPE = 38.07\nQuantile 95%\n",
+             color = "blue") +
+    theme(
+      plot.title = element_text(size=15)
+    )
 }

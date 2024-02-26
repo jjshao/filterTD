@@ -23,39 +23,51 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL
     stopifnot(typeof(quantiles)=="double")
   }
 
-  # Adjust parameters of graph
-  par(mfrow = c(2,3))
+  # Create HPE bins, save in new column in sync_tag_data
+  sync_tags$HPEbin <- as.factor(round(sync_tags[, hpe_col_name]))
+  sync_tags$HPEm <- sync_tags[, hpem_col_name]
+  # Count number of detections per HPE value
+  bins <- aggregate(HPEm ~ HPEbin, sync_tags, length)
+
+  # Loop through vector of quantiles
+  for (x in quantiles) {
+    sync_prob <- as.data.frame(with(sync_tags, (tapply(HPEm, HPEbin,
+                                                       quantile, probs=x,
+                                                       na.rm=TRUE))))
+
+    # Rename column
+    colnames(sync_prob) <- c("Q95")
+
+    # Create a HPEbin column to merge
+    sync_prob$HPEbin <- row.names(sync_prob)
+
+    # Merge two datasets
+    sync_ALL <- merge(bins, sync_prob, by="HPEbin")
+
+    # Plot
+    var_title <- paste("Binned HPE vs HPEm at Q", x)
+    print(ggplot(sync_ALL, aes(as.numeric(sync_ALL[,1]), y=as.numeric(sync_ALL[,3])))+
+            geom_point() + theme_bw() +
+            labs(y = "Counts of Observations HPEm", x = "HPE", title = var_title))
+
+  }
 
   # Initialize a vector to store the number of points removed for each quantile
   points_removed <- numeric(length(quantiles))
   # Original number of total points
   orig_num <- nrow(sync_tags)
+  # Calculate and display the number of points removed for each quantile
+  for (i in seq_along(quantiles)) {
+    q <- quantiles[i]
 
-  # Calculate the HPE value for the quantiles
-  quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
-
-  # Variable for naming
-  i = 1
-
-  # Loop through vector of quantiles
-  for (x in quantile_data) {
-    # Segment sync_tags to keep only rows where the HPE is less than or equal to
-    #the accepted HPE for that quantile
-    remaining_tags <- sync_tags[sync_tags[, hpe_col_name] <= x, ]
+    # Get the indices of points outside the quantile range
+    outside_indices <- which(sync_tags[, hpe_col_name] < quantile(sync_tags[, hpe_col_name], q))
 
     # Count the number of points removed
-    points_removed[i] <- orig_num - nrow(remaining_tags)
-
-    # Plot
-    plot(as.numeric(remaining_tags$HPE), remaining_tags$HPEm, main="HPE vs HPEm at Q",
-         xlab="HPE", ylab="HPEm", pch=19)
-    # Text for changing quantile, written in margin of each graph
-    mtext(text = quantiles[i], side = 3, adj = 0.95, padj = -1.35, cex = 1)
-
-    i = i + 1
+    points_removed[i] <- orig_num - length(outside_indices)
   }
 
-  # Add in the number of points removed to the table of HPE values for each quantile
+  quantile_data <- quantile(sync_tags[, hpe_col_name], probs = quantiles)
   result_df <- data.frame(Value = c(quantile_data),
                           "Number_Points_Removed" = points_removed)
 
