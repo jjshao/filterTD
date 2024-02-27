@@ -45,10 +45,10 @@ hpe.quantiles <- function(sync_tags, hpe_col_name, hpem_col_name, quantiles=NULL
     sync_ALL <- merge(bins, sync_prob, by="HPEbin")
 
     # Plot
-    var_title <- paste("Binned HPE vs HPEm at Q", x)
+    var_title <- paste("Binned HPE vs Counts of Observations of HPEm at Q", x)
     print(ggplot(sync_ALL, aes(as.numeric(sync_ALL[,1]), y=as.numeric(sync_ALL[,3])))+
             geom_point() + theme_bw() +
-            labs(y = "Counts of Observations HPEm", x = "HPE", title = var_title))
+            labs(y = "Counts of Observations HPEm", x = "Binned HPE", title = var_title))
 
   }
 
