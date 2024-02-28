@@ -1,4 +1,6 @@
-#' Get HPE quantiles corresponding to the given or default probabilities.
+#' Get HPE quantiles corresponding to the given or default probabilities
+#' and output scatterplots that showed binned HPE values vs number of
+#' observations of HPEm for each binned HPE value.
 #'
 #' @param sync_tags Table of data of sync tags
 #' @param hpe_col_name String name of column in sync_tags that has HPE values
