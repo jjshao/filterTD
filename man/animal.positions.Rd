@@ -4,7 +4,8 @@
 \alias{animal.positions}
 \title{Function that outputs a scatterplot of all observations of one ID (animal)
 with longitude as the x-axis and latitude as the y-axis and the colour of
-each point represents HPE.}
+each point represents HPE as well as a barplot with the number of observations
+of each HPE value.}
 \arguments{
 \item{animal_tags}{Table of animal data}
 
@@ -21,7 +22,8 @@ each point represents HPE.}
 \description{
 Function that outputs a scatterplot of all observations of one ID (animal)
 with longitude as the x-axis and latitude as the y-axis and the colour of
-each point represents HPE.
+each point represents HPE as well as a barplot with the number of observations
+of each HPE value.
 }
 \examples{
 # load dataset:
