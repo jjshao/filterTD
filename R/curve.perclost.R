@@ -30,9 +30,8 @@ curve.perclost <- function(sync_tags, hpe_col_name, hpe_val) {
   # Calculate and display the number of points removed for each quantile
   for (i in seq_along(uni_hpe_vals)) {
     q <- uni_hpe_vals[i]
-    print(q)
 
-    # Get the indices of points outside the quantile range
+    # Get the indices of points outside the range
     outside_indices <- which(sync_tags[, hpe_col_name] < q)
 
     # Get percentage of points removed
