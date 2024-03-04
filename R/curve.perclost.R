@@ -12,6 +12,8 @@
 #'
 #' @export
 
+require(ggplot2)
+
 curve.perclost <- function(sync_tags, hpe_col_name, hpe_val) {
   # Create HPE bins, save in new column in sync_tag_data
   sync_tags$HPEbin <- as.factor(round(sync_tags[, hpe_col_name]))
@@ -19,15 +21,15 @@ curve.perclost <- function(sync_tags, hpe_col_name, hpe_val) {
   # Count number of detections per HPE value
   bins <- aggregate(HPEm ~ HPEbin, sync_tags, length)
 
-  hpe_vals <- as.numeric(as.character(unique(sync_tags$HPEbin)))
+  uni_hpe_vals <- as.numeric(as.character(unique(sync_tags$HPEbin)))
 
   # Initialize a vector to store the number of points removed for each quantile
   points_removed <- numeric(length(hpe_vals))
   # Original number of total points
   orig_num <- nrow(sync_tags)
   # Calculate and display the number of points removed for each quantile
-  for (i in seq_along(hpe_vals)) {
-    q <- hpe_vals[i]
+  for (i in seq_along(uni_hpe_vals)) {
+    q <- uni_hpe_vals[i]
     print(q)
 
     # Get the indices of points outside the quantile range
@@ -37,7 +39,11 @@ curve.perclost <- function(sync_tags, hpe_col_name, hpe_val) {
     points_removed[i] <- (orig_num - length(outside_indices))/orig_num
   }
 
-  result_df <- data.frame(Value = c(hpe_vals),
+  result_df <- data.frame(Value = c(uni_hpe_vals),
                           "Perc_Removed" = points_removed)
-  plot(result_df$Value[1:hpe_val], result_df$Perc_Removed[1:hpe_val])
+  # Plot
+  print(ggplot(result_df[1:hpe_val,], aes(x=Value, y=Perc_Removed))+
+          geom_point() + theme_bw() +
+          labs(y = "Percentage of Data Removed", x = "Binned HPE",
+               title = "Percentage Data Removed if Filtered by x Binned HPE"))
 }
