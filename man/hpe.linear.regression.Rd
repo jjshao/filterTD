@@ -11,12 +11,10 @@ Accepts only one of hpem_max or percentage.}
 
 \item{hpem_col_name}{String name of column in sync_tags that has HPEm values}
 
-\item{percentage}{Percentage of data you are willing to lose, default to NULL}
-
-\item{hpem_max}{Maximum HPEm value you are willing to have the data be, default to NULL}
+\item{hpe_val}{Integer value for max HPE value user wants to display the graph to (with the max being the largest HPE value)}
 }
 \value{
-Vector of three values (p-value, r-squared, and percentage of removed data as a decimal).
+Output of plot HPE versus measured error to the median point with white circles with black outline and red x representing the two dimensional root mean square error of x and y components of error within an HPE bin
 }
 \description{
 Calculate linear regression given HPE level or percentage of data.

@@ -1,6 +1,7 @@
 #' Outputs a plot that shows the percentage of data remaining after filtering
 #' by each HPE value.
 #'
+#' @name curve.perclost
 #' @param sync_tags Table of data of sync tags
 #' @param hpe_col_name String name of column in sync_tags that has HPE values
 #' @param hpe_val Integer value for max HPE value user wants to display the graph to (with the max being the largest HPE value rounded to the nearest integer using base R round, IEC 60559 standard)

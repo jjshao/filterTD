@@ -4,9 +4,6 @@
 \alias{curve.perclost}
 \title{Outputs a plot that shows the percentage of data remaining after filtering
 by each HPE value.}
-\usage{
-curve.perclost(sync_tags, hpe_col_name, hpe_val)
-}
 \arguments{
 \item{sync_tags}{Table of data of sync tags}
 
