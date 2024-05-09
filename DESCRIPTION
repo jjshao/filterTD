@@ -1,7 +1,7 @@
 Package: filterTD
 Type: Package
 Title: Filter telemetry data
-Version: 0.1.0
+Version: 0.1.1
 Author: Jillian Shao
 Maintainer: Jillian Shao r <jillian.j.shao@gmail.com>
 Description: More about what it does (maybe more than one line)
