@@ -20,12 +20,14 @@
 #' or returns integers of number of observations per week/month if date range given
 #' @examples
 #' # Load data
-#' animal_tag_data <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
-#' metadata <- read.table(file = './extdata/dummy_metadata.csv', header=TRUE, sep=",")
+#' sample_file <- system.file("extdata", "dummy_animals.csv", package = "filterTelemetry")
+#' animal_tag_data <- read.table(file = sample_file, header=TRUE, sep=",")
+#' sample_metadata <- system.file("extdata", "dummy_metadata.csv", package = "filterTelemetry")
+#' metadata <- read.table(file = sample_metadata, header=TRUE, sep=",")
 #' animal_merged <- merge(animal_tag_data, metadata, by = "Id")
 #'
 #' # Example to make a scatterplot
-#' num_obs_per_tag_size <- num.obs.per.tag(animal_merged, "Id", graph=TRUE,
+#' num_obs_per_tag_size <- num_obs_per_tag(animal_merged, "Id", graph=TRUE,
 #'                                         grouping=c("Cancer irroratus", "M"),
 #'                                         grouping_col_name=c("Sp", "Sex"),
 #'                                         continuous_grouping=c("Size"),
@@ -33,9 +35,11 @@
 #'                                         metadata=metadata, scatterplot=TRUE)
 #'
 #' @export
+#'
+#' @importFrom graphics barplot
 
 
-num.obs.per.tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=FALSE,
+num_obs_per_tag <- function(merged_tags, id_col_name, graph=FALSE, scatterplot=FALSE,
                             metadata=NULL, grouping=NULL, grouping_col_name=NULL,
                             continuous_grouping=NULL, continuous_col_name=NULL,
                             size_col_name=NULL, start_date=NULL, end_date=NULL,

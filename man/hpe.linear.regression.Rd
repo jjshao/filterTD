@@ -12,9 +12,15 @@ Accepts only one of hpem_max or percentage.}
 \item{hpem_col_name}{String name of column in sync_tags that has HPEm values}
 
 \item{hpe_val}{Integer value for max HPE value user wants to display the graph to (with the max being the largest HPE value)}
+
+\item{id_col_name}{String name of column in sync_tags that has tag ID}
+
+\item{x_col_name}{String name of column in sync_tags that has x coordinates}
+
+\item{y_col_name}{String name of column in sync_tags that has y coordinates}
 }
 \value{
-Output of plot HPE versus measured error to the median point with white circles with black outline and red x representing the two dimensional root mean square error of x and y components of error within an HPE bin
+Returns the linear regression between RMS2d errors and HPE and output of plot HPE versus measured error to the median point with white circles with black outline and red x representing the two dimensional root mean square error of x and y components of error within an HPE bin
 }
 \description{
 Calculate linear regression given HPE level or percentage of data.

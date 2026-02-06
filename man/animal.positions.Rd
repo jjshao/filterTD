@@ -18,16 +18,16 @@ of each HPE value.}
 \item{num_bins}{Integer number of bins that user wants HPE to be split into}
 
 \item{ID}{Integer of animal ID}
+
+\item{save}{Boolean to indicate whether or not user wants to save the output plot as a png, default to FALSE}
 }
 \description{
-Function that outputs a scatterplot of all observations of one ID (animal)
-with longitude as the x-axis and latitude as the y-axis and the colour of
-each point represents HPE as well as a barplot with the number of observations
-of each HPE value.
+If user has save = TRUE, the plot will save with width = 16, height = 8,
+units = "in", dpi = 300 and be saved as aniposplot_ID.png
 }
 \examples{
 # load dataset:
-dummy_animal <- read.table(file = './extdata/dummy_animals.csv', header=TRUE, sep=",")
+dummy_animal <- read.table(file = './extdata/dummy_animals.csv/', header=TRUE, sep=",")
 animal.positions(animal_tags=dummy_animal, ani_hpe_col_name="HPE",
                    lat_col_name="Latitude", long_col_name="Longitude",
                    num_bins=6, ID=15048, id_col_name="Id")

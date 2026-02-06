@@ -1,17 +1,26 @@
-Package: filterTD
+Package: filterTelemetry
 Type: Package
-Title: Filter telemetry data
-Version: 0.1.1
-Author: Jillian Shao
-Maintainer: Jillian Shao r <jillian.j.shao@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Filter Telemetry Data
+Version: 1.0.0
+Author: Jillian Shao [aut, cre]
+Maintainer: Jillian Shao <jillian.j.shao@gmail.com>
+Authors@R: person(given = "Jillian",
+                    family = "Shao",
+                    role = c("aut", "cre"),
+                    email = "jillian.j.shao@gmail.com")
+Description: A set of functions to aid in filtering telemetry data taken from
+    Innovasea (Vemco) data collection devices. It provides a way to quickly 
+    visualize telemetry data by providing simpler functions to summarize data 
+    from sync and animal tags as well as functions that calculate regressions 
+    and quantiles based on HPE values. Includes two R markdown reports.
+License: GPL (>= 3) | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Imports: 
     dplyr,
     ggplot2,
-    scales
+    scales,
+    gridExtra,
+    rmarkdown

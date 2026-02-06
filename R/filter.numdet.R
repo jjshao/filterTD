@@ -1,5 +1,6 @@
 #' Finds a list of which values in a column occur more than a specified number of times in a dataset
 #'
+#' @name filter.numdet
 #' @param column.name Name of column to count
 #' @param num.det Minimum number of times occurred
 #' @return A list of numerics contained in the column that occur more than num.det times

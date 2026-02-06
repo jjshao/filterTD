@@ -1,0 +1,43 @@
+---
+title: "HPE Selection Report"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+library(filterTelemetry)
+library(knitr)
+```
+
+## Linear Regression for HPEm
+``` {r echo = FALSE, results = 'asis'}
+sync_linreg <- hpe_linear_regression(sync_tag_data,
+                                     hpe_col_name, 
+                                     hpem_col_name, 
+                                     id_col_name,
+                                     hpe_val)
+```
+
+## Summary of Removed Points
+``` {r echo = FALSE}
+sync_rempoint <- removed_points(sync_tags=sync_tag_data, hpe_col_name=hpe_col_name,
+                                hpem_col_name=hpem_col_name, id_col_name=id_col_name,
+                                time_col_name=time_col_name, date_format=date_format,
+                                hpem_max=hpem_max)
+
+total <- paste0(sync_rempoint[1], collapse = "\n")
+removed_tag <- paste0(sync_rempoint[2], collapse = "\n")
+removed_week <- paste0(sync_rempoint[3])
+```
+
+``` {r echo = FALSE, results = 'asis'}
+cat("Total number of removed points:", total, " \n")
+
+kable(sync_rempoint[2], caption = "Number of removed points per ID")
+
+kable(sync_rempoint[3], caption = "Number of removed points per week")
+```
+

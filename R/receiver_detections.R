@@ -2,7 +2,6 @@
 #' with longitude as the x-axis and latitude as the y-axis and the colour of
 #' each point represents HPE.
 #'
-#' @name receiver.detections
 #' @param sync_tags Table of data of sync tags
 #' @param sync_hpe_col_name String name of column in sync_tags that has HPE values
 #' @param animal_tags Table of data of animal tags
@@ -13,21 +12,26 @@
 #' @param id_col_name String name of column in sync_tags that has tag ID
 #' @examples
 #' # Load data
-#' sync_tag_data <- read.table(file = './extdata/dummy_sync.csv', header=TRUE, sep=",")
+#' sample_file <- system.file("extdata", "dummy_sync.csv", package = "filterTelemetry")
+#' sync_tag_data <- read.table(file = sample_file, header=TRUE, sep=",")
 #' # Example
-#' receiver.detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE", bins=7,
+#' receiver_detections(sync_tags=sync_tag_data, sync_hpe_col_name="HPE", bins=7,
 #'                     lat_col_name="Latitude", long_col_name="Longitude", id_col_name="Id")
 #'
 #' @export
 #'
+#' @import scales
+#' @importFrom graphics par
+#' @importFrom graphics points
+#' @importFrom graphics axis
+#' @importFrom graphics legend
+#'
 
-require(scales)
-
-receiver.detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
+receiver_detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
                                 animal_tags=NULL, ani_hpe_col_name=NULL,
                                 lat_col_name, long_col_name, bins=NULL,
                                 id_col_name) {
-  if(is.null(bins)) {
+  if(missing(bins)) {
     bins <- c(4,6,10,50,250)
   } else {
     # Check to make sure vector of quantiles is no longer than 6
@@ -81,7 +85,7 @@ receiver.detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
     # Legend
     cuts <- gsub(",", " - ", cuts)
     cuts <- gsub("\\(", "[", cuts)
-    legend("topright", cuts, col = rbPal(n_bins), pch = 16)
+    legend("topright", cuts, col=rbPal(bins), pch=16)
 
   }
   if(!missing(animal_tags) & !missing(ani_hpe_col_name)) {
@@ -108,6 +112,6 @@ receiver.detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
     cuts <- gsub(",", " - ", cuts)
     cuts <- gsub("\\(", "[", cuts)
     #legend("topright", inset = c(- 0.15, 0), cuts, col=rbPal(bins), pch=16)
-    legend("topright", cuts, col = rbPal(n_bins), pch = 16)
+    legend("topright", cuts, col=rbPal(bins), pch=16)
   }
 }
