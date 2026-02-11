@@ -12,7 +12,7 @@ Description: A set of functions to aid in filtering telemetry data taken from
     Innovasea (Vemco) data collection devices. It provides a way to quickly 
     visualize telemetry data by providing simpler functions to summarize data 
     from sync and animal tags as well as functions that calculate regressions 
-    and quantiles based on HPE values. Includes two R markdown reports.
+    and quantiles based on HPE values. 
 License: GPL (>= 3) | file LICENSE
 Encoding: UTF-8
 LazyData: true
