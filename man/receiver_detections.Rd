@@ -30,7 +30,7 @@ receiver_detections(
 
 \item{long_col_name}{String name of column in animal_tags that has longitude}
 
-\item{bins}{Vector of doubles of bins that user wants HPE to be split into, max vector length 6}
+\item{bins}{Vector of doubles of bins that user wants HPE to be split into, max vector length 6. If empty, defaults to c(4,6,10,50,250)}
 
 \item{id_col_name}{String name of column in sync_tags that has tag ID}
 }

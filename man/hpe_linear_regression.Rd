@@ -9,8 +9,10 @@ hpe_linear_regression(
   sync_tags,
   hpe_col_name,
   hpem_col_name,
+  hpe_val,
   id_col_name,
-  hpe_val
+  x_col_name,
+  y_col_name
 )
 }
 \arguments{
@@ -20,12 +22,16 @@ hpe_linear_regression(
 
 \item{hpem_col_name}{String name of column in sync_tags that has HPEm values}
 
-\item{id_col_name}{String name of column that includes tag ID (needs to be the same across data tables)}
-
 \item{hpe_val}{Integer value for max HPE value user wants to display the graph to (with the max being the largest HPE value)}
+
+\item{id_col_name}{String name of column in sync_tags that has tag ID}
+
+\item{x_col_name}{String name of column in sync_tags that has x coordinates}
+
+\item{y_col_name}{String name of column in sync_tags that has y coordinates}
 }
 \value{
-Output of plot HPE versus measured error to the median point with white circles with black outline and red x representing the two dimensional root mean square error of x and y components of error within an HPE bin
+Returns the linear regression between RMS2d errors and HPE and output of plot HPE versus measured error to the median point with white circles with black outline and red x representing the two dimensional root mean square error of x and y components of error within an HPE bin
 }
 \description{
 Calculate linear regression given HPE level or percentage of data.
@@ -36,6 +42,6 @@ Accepts only one of hpem_max or percentage.
 sample_file <- system.file("extdata", "dummy_sync.csv", package = "filterTelemetry")
 dummy_sync <- read.table(file = sample_file, header=TRUE, sep=",")
 # Example
-sync_linreg <- hpe_linear_regression(dummy_sync, "HPE", "HPEm", "Id", 30)
+sync_linreg <- hpe_linear_regression(dummy_sync, "HPE", "HPEm", 20, "Id", "X", "Y")
 
 }

@@ -8,7 +8,7 @@
 #' @param ani_hpe_col_name String name of column in animal_tags that has HPE values
 #' @param lat_col_name String name of column in animal_tags that has latitude
 #' @param long_col_name String name of column in animal_tags that has longitude
-#' @param bins Vector of doubles of bins that user wants HPE to be split into, max vector length 6
+#' @param bins Vector of doubles of bins that user wants HPE to be split into, max vector length 6. If empty, defaults to c(4,6,10,50,250)
 #' @param id_col_name String name of column in sync_tags that has tag ID
 #' @examples
 #' # Load data
@@ -31,7 +31,7 @@ receiver_detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
                                 animal_tags=NULL, ani_hpe_col_name=NULL,
                                 lat_col_name, long_col_name, bins=NULL,
                                 id_col_name) {
-  if(missing(bins)) {
+  if(is.null(bins)) {
     bins <- c(4,6,10,50,250)
   } else {
     # Check to make sure vector of quantiles is no longer than 6
@@ -85,7 +85,7 @@ receiver_detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
     # Legend
     cuts <- gsub(",", " - ", cuts)
     cuts <- gsub("\\(", "[", cuts)
-    legend("topright", cuts, col=rbPal(bins), pch=16)
+    legend("topright", cuts, col = rbPal(n_bins), pch = 16)
 
   }
   if(!missing(animal_tags) & !missing(ani_hpe_col_name)) {
@@ -112,6 +112,6 @@ receiver_detections <- function(sync_tags=NULL, sync_hpe_col_name=NULL,
     cuts <- gsub(",", " - ", cuts)
     cuts <- gsub("\\(", "[", cuts)
     #legend("topright", inset = c(- 0.15, 0), cuts, col=rbPal(bins), pch=16)
-    legend("topright", cuts, col=rbPal(bins), pch=16)
+    legend("topright", cuts, col = rbPal(n_bins), pch = 16)
   }
 }

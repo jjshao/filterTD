@@ -30,6 +30,6 @@ observations of HPEm for each binned HPE value.
 sample_file <- system.file("extdata", "dummy_sync.csv", package = "filterTelemetry")
 sync_tag_data <- read.table(file = sample_file, header=TRUE, sep=",")
 quantiles <- c(0.9, 0.8, 0.5, 0.3, 0.1, 0)
-sync_hpe2 <- hpe_quantiles(sync_tag_data, "HPE", "HPEm", quantiles)
+sync_hpe <- hpe_quantiles(sync_tag_data, "HPE", "HPEm", quantiles)
 
 }
